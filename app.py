@@ -888,6 +888,7 @@ def main():
     .att-cell-name {
         flex: 0 0 25% !important;
         max-width: 25% !important;
+        text-align: center;
         font-weight: bold;
         font-size: 0.9rem;
     }
