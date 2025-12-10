@@ -35,6 +35,8 @@ st.markdown("""
     .stElementContainer {
         margin: 0 !important;
         padding: 0 !important;
+        min-height: 1.8rem !important;
+        height: auto !important;
     }
     
     div.st-emotion-cache-3pwa5w {
@@ -48,10 +50,29 @@ st.markdown("""
         padding: 0 !important;
     }
     
+    /* st-emotion-cache-18kf3utを中央揃えに */
+    .st-emotion-cache-18kf3ut {
+        display: flex !important;
+        align-items: center !important;
+        min-height: 1.8rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* ek2vi384クラスも中央揃えに */
+    .ek2vi384 {
+        display: flex !important;
+        align-items: center !important;
+        min-height: 1.8rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
     /* すべてのstから始まる要素コンテナの余白を削減 */
     [class*="stElementContainer"] {
         margin: 0 !important;
         padding: 0 !important;
+        min-height: 1.8rem !important;
     }
     
     /* Streamlitのキャッシュクラスの余白も削除 */
