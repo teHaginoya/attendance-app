@@ -17,12 +17,12 @@ st.markdown("""
     <style>
     /* メインコンテナのスタイル */
     .main {
-        padding-top: 1rem;
+        padding-top: 0 !important;
     }
     
     /* 全体的なフォントサイズを小さく */
     .main .block-container {
-        padding-top: 1rem;
+        padding-top: 0 !important;
         padding-bottom: 1rem;
     }
     
@@ -39,20 +39,7 @@ st.markdown("""
         height: auto !important;
     }
     
-    /* st-emotion-cache-3pwa5w ek2vi381 を非表示 */
-    div.st-emotion-cache-3pwa5w.ek2vi381 {
-        display: none !important;
-    }
-    
-    /* ek2vi381クラス単体も非表示の候補 */
-    .element-container.st-emotion-cache-3pwa5w.ek2vi381 {
-        display: none !important;
-    }
-    
-    /* 念のため、空のstElementContainerを非表示 */
-    .stElementContainer:empty {
-        display: none !important;
-    }
+    /* 以下の非表示設定は削除（名前が表示されなくなるため） */
     
     /* st-emotion-cache-18kf3utを中央揃えに */
     .st-emotion-cache-18kf3ut {
