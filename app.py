@@ -26,6 +26,30 @@ st.markdown("""
         padding-bottom: 1rem;
     }
     
+    /* stMainBlockContainerの上余白を削減 */
+    .stMainBlockContainer {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* st-emotion-cache-zy6yx3の上余白も削減 */
+    .st-emotion-cache-zy6yx3 {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* e4man114クラスの上余白も削減 */
+    .e4man114 {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* block-containerクラス全般の上余白を削減 */
+    .block-container {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
     /* コンテナの余白を削減 */
     .element-container {
         margin-bottom: 0.2rem;
