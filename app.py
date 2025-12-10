@@ -9,7 +9,8 @@ import time
 st.set_page_config(
     page_title="出席簿アプリ",
     page_icon="📝",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"  # スマホでは初期状態で閉じる
 )
 
 # カスタムCSS
@@ -198,6 +199,96 @@ st.markdown("""
         background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
         border-color: #4caf50 !important;
         box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
+    }
+    
+    /* スマホ対応 - レスポンシブデザイン */
+    @media (max-width: 768px) {
+        /* メインコンテナの余白調整 */
+        .main .block-container {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        
+        /* ヘッダーのサイズ調整 */
+        .header-style {
+            padding: 0.5rem;
+        }
+        
+        .header-style h1 {
+            font-size: 1.2rem;
+        }
+        
+        .header-style p {
+            font-size: 0.75rem;
+        }
+        
+        /* メトリクスカードを縦積みに */
+        div[data-testid="stHorizontalBlock"] {
+            flex-direction: column !important;
+        }
+        
+        div[data-testid="metric-container"] {
+            width: 100% !important;
+            margin-bottom: 0.3rem;
+        }
+        
+        /* テキストサイズを少し小さく */
+        .stMarkdown {
+            font-size: 0.8rem;
+        }
+        
+        /* ボタンのパディング調整 */
+        button {
+            font-size: 0.75rem !important;
+            padding: 0.25rem 0.4rem !important;
+        }
+        
+        /* 入力フィールドのサイズ調整 */
+        .stTextInput input {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.3rem;
+        }
+        
+        /* テーブルヘッダーのフォントサイズ */
+        div[data-testid="column"] strong {
+            font-size: 0.8rem;
+        }
+    }
+    
+    /* さらに小さい画面（スマホ縦持ち） */
+    @media (max-width: 480px) {
+        /* ヘッダーをさらに小さく */
+        .header-style h1 {
+            font-size: 1rem;
+        }
+        
+        .header-style p {
+            font-size: 0.7rem;
+        }
+        
+        /* メトリクスをさらにコンパクトに */
+        div[data-testid="metric-container"] {
+            padding: 0.2rem;
+        }
+        
+        div[data-testid="metric-container"] label {
+            font-size: 0.7rem;
+        }
+        
+        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+            font-size: 1rem;
+        }
+        
+        /* ボタンをさらに小さく */
+        button {
+            font-size: 0.7rem !important;
+            padding: 0.2rem 0.3rem !important;
+        }
+        
+        /* Noと名前のフォントサイズ */
+        div[data-testid="column"] div {
+            font-size: 0.75rem !important;
+        }
     }
     
     /* メトリクスカードのスタイル */
