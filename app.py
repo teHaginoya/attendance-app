@@ -243,7 +243,7 @@ st.markdown("""
     
     /* テキストのサイズを小さく */
     .stMarkdown {
-        font-size: 0.9rem;
+        font-size: 0.1rem;
     }
     
     /* セレクトボックスのサイズを小さく */
@@ -582,7 +582,6 @@ def main():
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
-        margin-bottom: 0.5rem;
     }
 
     .stElementContainer {
@@ -605,7 +604,6 @@ def main():
         max-width: 8% !important;
         text-align: center;
         font-size: 1rem;
-        padding: 0 0.2rem;
     }
     
     .att-cell-name {
@@ -614,7 +612,6 @@ def main():
         text-align: center;
         font-weight: bold;
         font-size: 1rem;
-        padding: 0 0.5rem;
     }
     
     .att-cell-first {
@@ -622,7 +619,6 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
-        padding: 0 0.2rem;
     }
     
     .att-cell-second {
@@ -630,15 +626,13 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
-        padding: 0 0.2rem;
     }
     
     .att-cell-delete {
-        flex: 0 0 7% !important;
-        max-width: 7% !important;
+        flex: 0 0 10% !important;
+        max-width: 10% !important;
         text-align: center;
         font-size: 1rem;
-        padding: 0 0.2rem;
     }
     
     /* ヘッダーの各セルの文字サイズを統一 */
