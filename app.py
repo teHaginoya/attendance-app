@@ -222,36 +222,73 @@ st.markdown("""
             font-size: 0.75rem;
         }
         
-        /* メトリクスカードを縦積みに */
+        /* メトリクスカードを2列に */
         div[data-testid="stHorizontalBlock"] {
-            flex-direction: column !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 0.3rem !important;
         }
         
         div[data-testid="metric-container"] {
             width: 100% !important;
-            margin-bottom: 0.3rem;
+            padding: 0.3rem;
         }
         
-        /* テキストサイズを少し小さく */
-        .stMarkdown {
-            font-size: 0.8rem;
+        div[data-testid="metric-container"] label {
+            font-size: 0.75rem;
         }
         
-        /* ボタンのパディング調整 */
-        button {
+        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+            font-size: 1rem;
+        }
+        
+        /* カラムのサイズを固定して横スクロール可能に */
+        [data-testid="column"] {
+            min-width: fit-content !important;
+            flex-shrink: 0 !important;
+        }
+        
+        /* 出席簿のコンテナを横スクロール可能に */
+        [data-testid="stVerticalBlock"] > div > div {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        
+        /* ボタンのサイズ調整 */
+        div[data-testid="column"] button {
+            min-width: 60px !important;
             font-size: 0.75rem !important;
-            padding: 0.25rem 0.4rem !important;
+            padding: 0.3rem 0.4rem !important;
+            white-space: nowrap;
         }
         
         /* 入力フィールドのサイズ調整 */
         .stTextInput input {
             font-size: 0.8rem;
-            padding: 0.2rem 0.3rem;
+            padding: 0.3rem;
+            min-width: 120px;
         }
         
-        /* テーブルヘッダーのフォントサイズ */
-        div[data-testid="column"] strong {
-            font-size: 0.8rem;
+        /* Noと名前の幅を固定 */
+        div[data-testid="column"]:nth-child(1) {
+            min-width: 40px !important;
+        }
+        
+        div[data-testid="column"]:nth-child(2) {
+            min-width: 80px !important;
+        }
+        
+        div[data-testid="column"]:nth-child(3),
+        div[data-testid="column"]:nth-child(4) {
+            min-width: 70px !important;
+        }
+        
+        div[data-testid="column"]:nth-child(5) {
+            min-width: 150px !important;
+        }
+        
+        div[data-testid="column"]:nth-child(6) {
+            min-width: 50px !important;
         }
     }
     
@@ -263,31 +300,26 @@ st.markdown("""
         }
         
         .header-style p {
-            font-size: 0.7rem;
+            display: none; /* サブタイトルを非表示 */
         }
         
-        /* メトリクスをさらにコンパクトに */
-        div[data-testid="metric-container"] {
-            padding: 0.2rem;
-        }
-        
+        /* メトリクスの値をさらに小さく */
         div[data-testid="metric-container"] label {
             font-size: 0.7rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
-        /* ボタンをさらに小さく */
-        button {
-            font-size: 0.7rem !important;
-            padding: 0.2rem 0.3rem !important;
-        }
-        
-        /* Noと名前のフォントサイズ */
+        /* テキストサイズ */
         div[data-testid="column"] div {
             font-size: 0.75rem !important;
+        }
+        
+        /* コメント欄の幅を少し狭く */
+        div[data-testid="column"]:nth-child(5) {
+            min-width: 120px !important;
         }
     }
     
@@ -585,6 +617,20 @@ def main():
     for col, header in zip(header_cols, headers):
         with col:
             st.markdown(f"<div style='font-size:0.9rem;'><strong>{header}</strong></div>", unsafe_allow_html=True)
+    
+    # スマホ向けヒント（CSSで小さい画面のみ表示）
+    st.markdown("""
+        <div style='font-size:0.75rem; color:#666; margin:0.3rem 0; display:none;' class='mobile-hint'>
+            👉 横にスワイプして全体を表示
+        </div>
+        <style>
+            @media (max-width: 768px) {
+                .mobile-hint {
+                    display: block !important;
+                }
+            }
+        </style>
+    """, unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
