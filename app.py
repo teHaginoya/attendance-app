@@ -64,8 +64,6 @@ st.markdown("""
         height: auto !important;
     }
     
-    /* 以下の非表示設定は削除（名前が表示されなくなるため） */
-    
     /* st-emotion-cache-18kf3utを中央揃えに */
     .st-emotion-cache-18kf3ut {
         display: flex !important;
@@ -201,334 +199,6 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
     }
     
-    /* テーブルスタイル */
-    .attendance-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        background-color: white;
-    }
-    
-    .attendance-table th {
-        background-color: #1f77b4;
-        color: white;
-        padding: 0.5rem;
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid #ddd;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-    
-    .attendance-table td {
-        padding: 0.3rem;
-        border: 1px solid #ddd;
-        text-align: center;
-        vertical-align: middle;
-    }
-    
-    .attendance-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    
-    .attendance-table tr:hover {
-        background-color: #f0f8ff;
-    }
-    
-    .table-no {
-        width: 8%;
-        font-weight: bold;
-    }
-    
-    .table-name {
-        width: 30%;
-        font-weight: bold;
-        text-align: left !important;
-        padding-left: 0.5rem !important;
-    }
-    
-    .table-first, .table-second {
-        width: 26%;
-    }
-    
-    .table-delete {
-        width: 10%;
-    }
-    
-    .table-button {
-        width: 100%;
-        padding: 0.3rem 0.5rem;
-        border: none;
-        border-radius: 5px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    
-    .table-button-secondary {
-        background-color: #f0f0f0;
-        color: #666;
-        border: 1px solid #ddd;
-    }
-    
-    .table-button-secondary:hover {
-        background-color: #e8f5e9;
-        border-color: #4caf50;
-        color: #2e7d32;
-    }
-    
-    .table-button-primary {
-        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%);
-        color: white;
-        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
-    }
-    
-    .table-button-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
-    }
-    
-    .table-button-delete {
-        background-color: transparent;
-        border: none;
-        font-size: 1.2rem;
-        cursor: pointer;
-        padding: 0.2rem;
-    }
-    
-    .table-button-delete:hover {
-        transform: scale(1.2);
-    }
-    
-    /* スマホ対応 */
-    @media (max-width: 768px) {
-        .attendance-table {
-            font-size: 0.75rem;
-        }
-        
-        .attendance-table th {
-            padding: 0.3rem;
-            font-size: 0.75rem;
-        }
-        
-        .attendance-table td {
-            padding: 0.2rem;
-        }
-        
-        .table-button {
-            padding: 0.25rem 0.3rem;
-            font-size: 0.7rem;
-        }
-        
-        .table-name {
-            padding-left: 0.3rem !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .attendance-table {
-            font-size: 0.7rem;
-        }
-        
-        .attendance-table th {
-            padding: 0.25rem;
-            font-size: 0.7rem;
-        }
-        
-        .attendance-table td {
-            padding: 0.15rem;
-        }
-        
-        .table-button {
-            padding: 0.2rem 0.2rem;
-            font-size: 0.65rem;
-        }
-        
-        .table-button-delete {
-            font-size: 1rem;
-        }
-    }
-    
-    /* スマホ対応 - レスポンシブデザイン */
-    @media (max-width: 768px) {
-        /* メインコンテナの余白調整 */
-        .main .block-container {
-            padding-left: 0.3rem;
-            padding-right: 0.3rem;
-        }
-        
-        /* ヘッダーのサイズ調整 */
-        .header-style {
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .header-style h1 {
-            font-size: 1.1rem;
-        }
-        
-        .header-style p {
-            font-size: 0.7rem;
-        }
-        
-        /* メトリクスカードを2列に */
-        div[data-testid="stHorizontalBlock"] {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr !important;
-            gap: 0.3rem !important;
-        }
-        
-        div[data-testid="metric-container"] {
-            width: 100% !important;
-            padding: 0.3rem;
-        }
-        
-        div[data-testid="metric-container"] label {
-            font-size: 0.7rem;
-        }
-        
-        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.95rem;
-        }
-        
-        /* カラムの余白を削減 */
-        [data-testid="column"] {
-            padding: 0 0.05rem !important;
-        }
-        
-        /* 各カラムごとに幅を個別指定（nth-child使用） */
-        /* No列 */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(1) {
-            flex: 0 0 10% !important;
-            max-width: 10% !important;
-        }
-        
-        /* 名前列 */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
-            flex: 0 0 30% !important;
-            max-width: 30% !important;
-        }
-        
-        /* 1次会列 */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(3) {
-            flex: 0 0 25% !important;
-            max-width: 25% !important;
-        }
-        
-        /* 2次会列 */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(4) {
-            flex: 0 0 25% !important;
-            max-width: 25% !important;
-        }
-        
-        /* 削除列 */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(5) {
-            flex: 0 0 10% !important;
-            max-width: 10% !important;
-        }
-        
-        /* 各カラムごとのスタイル */
-        .col-no {
-            font-size: 0.75rem !important;
-        }
-        
-        .col-name {
-            font-size: 0.75rem !important;
-        }
-        
-        .col-first-party button,
-        .col-second-party button {
-            font-size: 0.65rem !important;
-            padding: 0.25rem 0.1rem !important;
-            white-space: nowrap;
-        }
-        
-        .col-delete button {
-            font-size: 0.85rem !important;
-            padding: 0.2rem 0.1rem !important;
-        }
-        
-        /* 区切り線の余白をさらに削減 */
-        hr {
-            margin-top: 0.2rem;
-            margin-bottom: 0.2rem;
-        }
-    }
-    
-    /* さらに小さい画面（スマホ縦持ち） */
-    @media (max-width: 480px) {
-        /* ヘッダーをさらに小さく */
-        .header-style h1 {
-            font-size: 1rem;
-        }
-        
-        .header-style p {
-            display: none;
-        }
-        
-        /* メトリクスの値をさらに小さく */
-        div[data-testid="metric-container"] label {
-            font-size: 0.6rem;
-        }
-        
-        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.8rem;
-        }
-        
-        /* 各カラムごとに幅を調整（より小さい画面用） */
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(1) {
-            flex: 0 0 8% !important;
-            max-width: 8% !important;
-        }
-        
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
-            flex: 0 0 28% !important;
-            max-width: 28% !important;
-        }
-        
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(3) {
-            flex: 0 0 27% !important;
-            max-width: 27% !important;
-        }
-        
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(4) {
-            flex: 0 0 27% !important;
-            max-width: 27% !important;
-        }
-        
-        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(5) {
-            flex: 0 0 10% !important;
-            max-width: 10% !important;
-        }
-        
-        /* 各カラムのサイズをさらに小さく */
-        .col-no {
-            font-size: 0.7rem !important;
-        }
-        
-        .col-name {
-            font-size: 0.7rem !important;
-        }
-        
-        .col-first-party button,
-        .col-second-party button {
-            font-size: 0.6rem !important;
-            padding: 0.2rem 0.05rem !important;
-        }
-        
-        .col-delete button {
-            font-size: 0.8rem !important;
-            padding: 0.15rem 0.05rem !important;
-        }
-        
-        /* カラム間の余白を最小に */
-        [data-testid="column"] {
-            padding: 0 0.02rem !important;
-        }
-    }
-    
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
@@ -621,6 +291,70 @@ st.markdown("""
     /* stContainerの余白を削除 */
     [data-testid="stVerticalBlock"] > div {
         gap: 0.1rem;
+    }
+    
+    /* スマホ対応 - レスポンシブデザイン */
+    @media (max-width: 768px) {
+        /* メインコンテナの余白調整 */
+        .main .block-container {
+            padding-left: 0.3rem;
+            padding-right: 0.3rem;
+        }
+        
+        /* ヘッダーのサイズ調整 */
+        .header-style {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-style h1 {
+            font-size: 1.1rem;
+        }
+        
+        .header-style p {
+            font-size: 0.7rem;
+        }
+        
+        /* メトリクスカードを2列に */
+        div[data-testid="stHorizontalBlock"] {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 0.3rem !important;
+        }
+        
+        div[data-testid="metric-container"] {
+            width: 100% !important;
+            padding: 0.3rem;
+        }
+        
+        div[data-testid="metric-container"] label {
+            font-size: 0.7rem;
+        }
+        
+        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+            font-size: 0.95rem;
+        }
+    }
+    
+    /* さらに小さい画面（スマホ縦持ち） */
+    @media (max-width: 480px) {
+        /* ヘッダーをさらに小さく */
+        .header-style h1 {
+            font-size: 1rem;
+        }
+        
+        .header-style p {
+            display: none;
+        }
+        
+        /* メトリクスの値をさらに小さく */
+        div[data-testid="metric-container"] label {
+            font-size: 0.6rem;
+        }
+        
+        div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+            font-size: 0.8rem;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -848,6 +582,7 @@ def main():
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
+        margin-bottom: 0.5rem;
     }
 
     .stElementContainer {
@@ -857,32 +592,20 @@ def main():
         margin-right: 0 !important;
     }
 
-/* セル内のstElementContainerの右余白も削除 */
-.att-cell-first .stElementContainer,
-.att-cell-second .stElementContainer,
-.stElementContainer {
-    margin: 0 !important;
-    padding: 0 !important;
-    padding-right: 0 !important;
-    margin-right: 0 !important;
-}
-
-/* セル内のstElementContainerの右余白も削除 */
-.att-cell-first .stElementContainer,
-.att-cell-second .stElementContainer,
-.att-cell-delete .stElementContainer {
-    margin-right: 0 !important;
-    padding-right: 0 !important;
-}.att-cell-delete .stElementContainer {
-    margin-right: 0 !important;
-    padding-right: 0 !important;
-}
+    /* セル内のstElementContainerの右余白も削除 */
+    .att-cell-first .stElementContainer,
+    .att-cell-second .stElementContainer,
+    .att-cell-delete .stElementContainer {
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+    }
     
     .att-cell-no {
         flex: 0 0 8% !important;
         max-width: 8% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-name {
@@ -891,6 +614,7 @@ def main():
         text-align: center;
         font-weight: bold;
         font-size: 1rem;
+        padding: 0 0.5rem;
     }
     
     .att-cell-first {
@@ -898,6 +622,7 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-second {
@@ -905,12 +630,23 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-delete {
         flex: 0 0 7% !important;
         max-width: 7% !important;
         text-align: center;
+        font-size: 1rem;
+        padding: 0 0.2rem;
+    }
+    
+    /* ヘッダーの各セルの文字サイズを統一 */
+    .attendance-header .att-cell-no,
+    .attendance-header .att-cell-name,
+    .attendance-header .att-cell-first,
+    .attendance-header .att-cell-second,
+    .attendance-header .att-cell-delete {
         font-size: 1rem;
     }
     
@@ -974,6 +710,15 @@ def main():
         .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-delete { flex: 0 0 7% !important; max-width: 7% !important; }
         
+        /* ヘッダーの文字サイズも統一 */
+        .attendance-header .att-cell-no,
+        .attendance-header .att-cell-name,
+        .attendance-header .att-cell-first,
+        .attendance-header .att-cell-second,
+        .attendance-header .att-cell-delete {
+            font-size: 0.75rem;
+        }
+        
         .att-cell-first button,
         .att-cell-second button {
             font-size: 0.65rem !important;
@@ -990,6 +735,15 @@ def main():
         .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-delete { flex: 0 0 7% !important; max-width: 7% !important; }
+        
+        /* ヘッダーの文字サイズも統一 */
+        .attendance-header .att-cell-no,
+        .attendance-header .att-cell-name,
+        .attendance-header .att-cell-first,
+        .attendance-header .att-cell-second,
+        .attendance-header .att-cell-delete {
+            font-size: 0.7rem;
+        }
         
         .att-cell-first button,
         .att-cell-second button {
@@ -1024,7 +778,7 @@ def main():
     
     for idx, row in df.iterrows():
         # 1行全体をHTMLで作成
-        # st.markdown(f'<div class="attendance-row">', unsafe_allow_html=True)
+        st.markdown(f'<div class="attendance-row">', unsafe_allow_html=True)
         st.markdown(f'<div class="att-cell-no">{row["No"]}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="att-cell-name">{row["名前"]}</div>', unsafe_allow_html=True)
         
