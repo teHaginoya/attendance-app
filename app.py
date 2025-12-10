@@ -522,7 +522,6 @@ def main():
         # ソートに失敗してもそのまま表示を続ける
     
     # 統計情報
-    st.markdown('<div class="stats-container">', unsafe_allow_html=True)
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("👥 総参加者数", len(df))
@@ -535,55 +534,12 @@ def main():
     with col4:
         both_attended = ((df["1次会"]) & (df["2次会"])).sum()
         st.metric("⭐ 両方出席", f"{both_attended}名")
-    st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown("---")
-    
-    # テーブル全体を囲む枠
-    st.markdown('<div class="table-wrapper">', unsafe_allow_html=True)
     
     # テーブル形式で表示
     st.markdown("""
     <style>
-    /* 統計情報を囲む枠 */
-    .stats-container {
-        background-color: #ffffff;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* テーブル全体を囲む枠 */
-    .table-wrapper {
-        background-color: #ffffff;
-        border: 2px solid #1f77b4;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-top: 1rem;
-        box-shadow: 0 2px 8px rgba(31, 119, 180, 0.15);
-    }
-    
-    /* ヘッダーを囲む枠 */
-    .header-wrapper {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* レコードをまとめる枠 */
-    .records-wrapper {
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 0.5rem;
-        max-height: 600px;
-        overflow-y: auto;
-    }
-    
     .attendance-table-container {
         width: 100%;
         display: flex;
@@ -647,42 +603,64 @@ def main():
     .att-cell-no {
         flex: 0 0 8% !important;
         max-width: 8% !important;
+        min-width: 8% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
+        overflow: hidden;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     .att-cell-name {
         flex: 0 0 25% !important;
         max-width: 25% !important;
+        min-width: 25% !important;
         text-align: center;
         font-weight: bold;
         font-size: 1rem;
         padding: 0 0.5rem;
+        overflow: hidden;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     .att-cell-first {
         flex: 0 0 25% !important;
         max-width: 25% !important;
+        min-width: 25% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     .att-cell-second {
         flex: 0 0 25% !important;
         max-width: 25% !important;
+        min-width: 25% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     .att-cell-delete {
         flex: 0 0 10% !important;
         max-width: 10% !important;
+        min-width: 10% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
     }
     
     /* ヘッダーの各セルの文字サイズを統一 */
@@ -709,12 +687,23 @@ def main():
         display: inline-block !important;
         margin: 0 !important;
         padding: 0 !important;
+        max-width: fit-content !important;
+        width: auto !important;
     }
     
     /* att-cell-*が含まれるdivはインライン */
     div[class*="att-cell-"] {
-        display: inline-block !important;
+        display: inline-flex !important;
         vertical-align: middle !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* att-cell内の全ての子要素も幅制限 */
+    .att-cell-no > *,
+    .att-cell-name > * {
+        max-width: 100% !important;
+        width: 100% !important;
+        display: block !important;
     }
     
     /* attendance-row内のst-emotion-cache-pk3c77を制限 */
@@ -788,31 +777,11 @@ def main():
     }
     
     @media (max-width: 768px) {
-        .stats-container {
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .table-wrapper {
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .header-wrapper {
-            padding: 0.3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .records-wrapper {
-            padding: 0.3rem;
-            max-height: 400px;
-        }
-        
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.75rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.75rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
+        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; min-width: 8% !important; font-size: 0.75rem; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; font-size: 0.75rem; }
+        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
+        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; min-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
@@ -833,31 +802,12 @@ def main():
     }
     
     @media (max-width: 480px) {
-        .stats-container {
-            padding: 0.3rem;
-        }
-        
-        .table-wrapper {
-            padding: 0.3rem;
-            margin-top: 0.3rem;
-        }
-        
-        .header-wrapper {
-            padding: 0.2rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .records-wrapper {
-            padding: 0.2rem;
-            max-height: 300px;
-        }
-        
         .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
+        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; min-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
+        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
+        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; min-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
@@ -887,7 +837,6 @@ def main():
     
     # ヘッダー行
     st.markdown("""
-    <div class="header-wrapper">
     <div class="attendance-header">
         <div class="att-cell-no">No</div>
         <div class="att-cell-name">名前</div>
@@ -895,11 +844,7 @@ def main():
         <div class="att-cell-second">2次会</div>
         <div class="att-cell-delete">削除</div>
     </div>
-    </div>
     """, unsafe_allow_html=True)
-    
-    # レコードをまとめる枠の開始
-    st.markdown('<div class="records-wrapper">', unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
@@ -976,10 +921,6 @@ def main():
             st.success("✅ 変更を保存しました")
             time.sleep(0.5)
             st.rerun()
-    
-    # レコード枠とテーブル全体の枠を閉じる
-    st.markdown('</div>', unsafe_allow_html=True)  # records-wrapper
-    st.markdown('</div>', unsafe_allow_html=True)  # table-wrapper
 
 if __name__ == "__main__":
     main()
