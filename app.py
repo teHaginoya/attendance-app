@@ -574,7 +574,6 @@ st.markdown("""
     /* テキストのサイズを小さく */
     .stMarkdown {
         font-size: 0.9rem;
-        margin-bottom: 0.3rem;
     }
     
     /* セレクトボックスのサイズを小さく */
@@ -931,11 +930,11 @@ def main():
     }
     
     @media (max-width: 768px) {
-        .att-cell-no { flex: 0 0 10% !important; max-width: 10% !important; font-size: 0.75rem; }
-        .att-cell-name { flex: 0 0 30% !important; max-width: 30% !important; font-size: 0.75rem; }
+        .att-cell-no { flex: 0 0 8% !important; max-width: 10% !important; font-size: 0.75rem; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 30% !important; font-size: 0.75rem; }
         .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
+        .att-cell-delete { flex: 0 0 7% !important; max-width: 10% !important; }
         
         .att-cell-first button,
         .att-cell-second button {
@@ -949,10 +948,10 @@ def main():
     @media (max-width: 480px) {
         .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
         .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
-        .att-cell-name { flex: 0 0 28% !important; max-width: 28% !important; font-size: 0.7rem; padding: 0 0.2rem; }
-        .att-cell-first { flex: 0 0 27% !important; max-width: 27% !important; }
-        .att-cell-second { flex: 0 0 27% !important; max-width: 27% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 28% !important; font-size: 0.7rem; padding: 0 0.2rem; }
+        .att-cell-first { flex: 0 0 25% !important; max-width: 27% !important; }
+        .att-cell-second { flex: 0 0 25% !important; max-width: 27% !important; }
+        .att-cell-delete { flex: 0 0 7% !important; max-width: 10% !important; }
         
         .att-cell-first button,
         .att-cell-second button {
