@@ -852,6 +852,8 @@ def main():
     }
     
     .att-cell-name {
+        display: flex;
+        align-items: center;
         flex: 0 0 25% !important;
         max-width: 25% !important;
         font-weight: bold;
