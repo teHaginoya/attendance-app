@@ -17,30 +17,125 @@ st.markdown("""
     <style>
     /* メインコンテナのスタイル */
     .main {
-        padding-top: 2rem;
+        padding-top: 1rem;
+    }
+    
+    /* 全体的なフォントサイズを小さく */
+    .main .block-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    /* コンテナの余白を削減 */
+    .element-container {
+        margin-bottom: 0.2rem;
+    }
+    
+    /* 行間の余白を削減 */
+    .row-widget {
+        margin-bottom: 0.3rem;
+    }
+    
+    /* 入力フィールドのサイズを小さく */
+    .stTextInput input {
+        font-size: 0.9rem;
+        padding: 0.2rem 0.4rem;
+        height: 1.8rem;
+        margin-bottom: 0;
+    }
+    
+    .stTextInput > div {
+        margin-bottom: 0;
+    }
+    
+    /* チェックボックスのサイズと余白を小さく */
+    .stCheckbox {
+        font-size: 0.85rem;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    
+    .stCheckbox > label {
+        margin-bottom: 0;
+        padding: 0.2rem 0;
+    }
+    
+    /* ボタンのサイズを小さく */
+    .stButton button {
+        font-size: 0.85rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        margin-bottom: 0;
+    }
+    
+    .stButton {
+        margin-bottom: 0;
     }
     
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
-        border-radius: 10px;
-        padding: 1rem;
+        border-radius: 8px;
+        padding: 0.4rem;
         border: 2px solid #1f77b4;
+    }
+    
+    div[data-testid="metric-container"] label {
+        font-size: 0.85rem;
+    }
+    
+    div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+        font-size: 1.2rem;
     }
     
     /* ヘッダーのスタイル */
     .header-style {
         background: linear-gradient(90deg, #1f77b4 0%, #3498db 100%);
-        padding: 1.5rem;
+        padding: 0.8rem;
         border-radius: 10px;
         color: white;
-        margin-bottom: 2rem;
+        margin-bottom: 0.8rem;
     }
     
-    /* ボタンのスタイル調整 */
-    .stButton button {
-        border-radius: 5px;
-        transition: all 0.3s ease;
+    .header-style h1 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    
+    .header-style p {
+        font-size: 0.9rem;
+        margin: 0;
+        opacity: 0.9;
+    }
+    
+    /* テキストのサイズを小さく */
+    .stMarkdown {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    /* セレクトボックスのサイズを小さく */
+    .stSelectbox select {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    /* dividerの余白を大幅に減らす */
+    hr {
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    /* カラムの余白を削減 */
+    [data-testid="column"] {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    /* コンテナの余白を削減 */
+    [data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
+        gap: 0.3rem;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -131,7 +226,7 @@ def save_data(sheet, df):
 
 def main():
     # タイトル
-    st.markdown('<div class="header-style"><h1 style="margin:0;">📝 出席簿アプリ</h1><p style="margin:0; opacity:0.9;">参加者の出席状況を管理</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="header-style"><h1>📝 出席簿アプリ</h1><p>参加者の出席状況を管理</p></div>', unsafe_allow_html=True)
     
     # Google Sheetsクライアント取得
     client = get_google_sheets_client()
@@ -241,7 +336,7 @@ def main():
     headers = ["No", "名前", "1次会", "2次会", "コメント", "削除"]
     for col, header in zip(header_cols, headers):
         with col:
-            st.markdown(f"**{header}**")
+            st.markdown(f"<div style='font-size:0.9rem;'><strong>{header}</strong></div>", unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
@@ -251,10 +346,10 @@ def main():
             col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
             
             with col1:
-                st.markdown(f"<div style='padding-top:8px;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='padding-top:2px; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
             
             with col2:
-                st.markdown(f"<div style='padding-top:8px;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='padding-top:2px; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
             
             with col3:
                 first_party = st.checkbox(
