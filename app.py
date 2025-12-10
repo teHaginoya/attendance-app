@@ -205,21 +205,22 @@ st.markdown("""
     @media (max-width: 768px) {
         /* メインコンテナの余白調整 */
         .main .block-container {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 0.3rem;
+            padding-right: 0.3rem;
         }
         
         /* ヘッダーのサイズ調整 */
         .header-style {
             padding: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         .header-style h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .header-style p {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
         
         /* メトリクスカードを2列に */
@@ -235,60 +236,34 @@ st.markdown("""
         }
         
         div[data-testid="metric-container"] label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
-        /* カラムのサイズを固定して横スクロール可能に */
+        /* カラムを画面幅に収める */
         [data-testid="column"] {
-            min-width: fit-content !important;
-            flex-shrink: 0 !important;
-        }
-        
-        /* 出席簿のコンテナを横スクロール可能に */
-        [data-testid="stVerticalBlock"] > div > div {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
+            padding: 0 0.1rem !important;
         }
         
         /* ボタンのサイズ調整 */
         div[data-testid="column"] button {
-            min-width: 60px !important;
-            font-size: 0.75rem !important;
-            padding: 0.3rem 0.4rem !important;
+            font-size: 0.7rem !important;
+            padding: 0.25rem 0.2rem !important;
             white-space: nowrap;
         }
         
-        /* 入力フィールドのサイズ調整 */
-        .stTextInput input {
-            font-size: 0.8rem;
-            padding: 0.3rem;
-            min-width: 120px;
+        /* テキストのフォントサイズ */
+        div[data-testid="column"] div {
+            font-size: 0.8rem !important;
         }
         
-        /* Noと名前の幅を固定 */
-        div[data-testid="column"]:nth-child(1) {
-            min-width: 40px !important;
-        }
-        
-        div[data-testid="column"]:nth-child(2) {
-            min-width: 80px !important;
-        }
-        
-        div[data-testid="column"]:nth-child(3),
-        div[data-testid="column"]:nth-child(4) {
-            min-width: 70px !important;
-        }
-        
-        div[data-testid="column"]:nth-child(5) {
-            min-width: 150px !important;
-        }
-        
-        div[data-testid="column"]:nth-child(6) {
-            min-width: 50px !important;
+        /* 区切り線の余白をさらに削減 */
+        hr {
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
         }
     }
     
@@ -305,11 +280,17 @@ st.markdown("""
         
         /* メトリクスの値をさらに小さく */
         div[data-testid="metric-container"] label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+        
+        /* ボタンをさらに小さく */
+        div[data-testid="column"] button {
+            font-size: 0.65rem !important;
+            padding: 0.2rem 0.15rem !important;
         }
         
         /* テキストサイズ */
@@ -317,9 +298,9 @@ st.markdown("""
             font-size: 0.75rem !important;
         }
         
-        /* コメント欄の幅を少し狭く */
-        div[data-testid="column"]:nth-child(5) {
-            min-width: 120px !important;
+        /* カラム間の余白を最小に */
+        [data-testid="column"] {
+            padding: 0 0.05rem !important;
         }
     }
     
@@ -612,32 +593,18 @@ def main():
     st.markdown("---")
     
     # テーブルヘッダー
-    header_cols = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
-    headers = ["No", "名前", "1次会", "2次会", "コメント", "削除"]
+    header_cols = st.columns([1, 3, 1.5, 1.5, 1])
+    headers = ["No", "名前", "1次会", "2次会", "削除"]
     for col, header in zip(header_cols, headers):
         with col:
             st.markdown(f"<div style='font-size:0.9rem;'><strong>{header}</strong></div>", unsafe_allow_html=True)
-    
-    # スマホ向けヒント（CSSで小さい画面のみ表示）
-    st.markdown("""
-        <div style='font-size:0.75rem; color:#666; margin:0.3rem 0; display:none;' class='mobile-hint'>
-            👉 横にスワイプして全体を表示
-        </div>
-        <style>
-            @media (max-width: 768px) {
-                .mobile-hint {
-                    display: block !important;
-                }
-            }
-        </style>
-    """, unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
     
     for idx, row in df.iterrows():
         # レコード全体の余白を最小化
-        col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
+        col1, col2, col3, col4, col5 = st.columns([1, 3, 1.5, 1.5, 1])
         
         with col1:
             st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
@@ -674,15 +641,6 @@ def main():
                 second_party = row["2次会"]
         
         with col5:
-            comment = st.text_input(
-                "コメント",
-                value=row["コメント"],
-                key=f"comment_{row['No']}",
-                label_visibility="collapsed",
-                placeholder="コメントを入力..."
-            )
-        
-        with col6:
             # 削除確認用のセッションステート
             confirm_key = f"confirm_delete_{row['No']}"
             if confirm_key not in st.session_state:
@@ -709,13 +667,11 @@ def main():
                         st.session_state[confirm_key] = False
                         st.rerun()
         
-        # 変更があったか確認
+        # 変更があったか確認（コメントの比較を削除）
         if (first_party != row["1次会"] or 
-            second_party != row["2次会"] or 
-            comment != row["コメント"]):
+            second_party != row["2次会"]):
             df.at[idx, "1次会"] = first_party
             df.at[idx, "2次会"] = second_party
-            df.at[idx, "コメント"] = comment
             df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             changes_made = True
         
