@@ -59,8 +59,9 @@ st.markdown("""
     .stElementContainer {
         margin: 0 !important;
         padding: 0 !important;
-        min-height: 1.8rem !important;
+        min-height: 0 !important;
         height: auto !important;
+        max-height: fit-content !important;
     }
     
     /* st-emotion-cache-18kf3utを中央揃えに */
