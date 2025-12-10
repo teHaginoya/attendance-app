@@ -123,8 +123,8 @@ st.markdown("""
     
     /* dividerの余白を大幅に減らす */
     hr {
-        margin-top: 0.3rem;
-        margin-bottom: 0.3rem;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
     }
     
     /* カラムの余白を削減 */
@@ -135,7 +135,12 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     [data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
-        gap: 0.3rem;
+        gap: 0.1rem;
+    }
+    
+    /* stContainerの余白を削除 */
+    [data-testid="stVerticalBlock"] > div {
+        gap: 0.1rem;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -342,78 +347,78 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
-        with st.container():
-            col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
+        # レコード全体の余白を最小化
+        col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
+        
+        with col1:
+            st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
+        
+        with col3:
+            first_party = st.checkbox(
+                "1次会",
+                value=row["1次会"],
+                key=f"first_{row['No']}",
+                label_visibility="collapsed"
+            )
+        
+        with col4:
+            second_party = st.checkbox(
+                "2次会",
+                value=row["2次会"],
+                key=f"second_{row['No']}",
+                label_visibility="collapsed"
+            )
+        
+        with col5:
+            comment = st.text_input(
+                "コメント",
+                value=row["コメント"],
+                key=f"comment_{row['No']}",
+                label_visibility="collapsed",
+                placeholder="コメントを入力..."
+            )
+        
+        with col6:
+            # 削除確認用のセッションステート
+            confirm_key = f"confirm_delete_{row['No']}"
+            if confirm_key not in st.session_state:
+                st.session_state[confirm_key] = False
             
-            with col1:
-                st.markdown(f"<div style='padding-top:2px; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
+            # 削除ボタン
+            if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
+                st.session_state[confirm_key] = True
             
-            with col2:
-                st.markdown(f"<div style='padding-top:2px; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
-            
-            with col3:
-                first_party = st.checkbox(
-                    "1次会",
-                    value=row["1次会"],
-                    key=f"first_{row['No']}",
-                    label_visibility="collapsed"
-                )
-            
-            with col4:
-                second_party = st.checkbox(
-                    "2次会",
-                    value=row["2次会"],
-                    key=f"second_{row['No']}",
-                    label_visibility="collapsed"
-                )
-            
-            with col5:
-                comment = st.text_input(
-                    "コメント",
-                    value=row["コメント"],
-                    key=f"comment_{row['No']}",
-                    label_visibility="collapsed",
-                    placeholder="コメントを入力..."
-                )
-            
-            with col6:
-                # 削除確認用のセッションステート
-                confirm_key = f"confirm_delete_{row['No']}"
-                if confirm_key not in st.session_state:
-                    st.session_state[confirm_key] = False
-                
-                # 削除ボタン
-                if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
-                    st.session_state[confirm_key] = True
-                
-                # 確認ダイアログ
-                if st.session_state[confirm_key]:
-                    st.warning(f"⚠️ {row['名前']}さんを削除しますか？")
-                    col_yes, col_no = st.columns(2)
-                    with col_yes:
-                        if st.button("はい", key=f"yes_{row['No']}", type="primary"):
-                            df = df[df["No"] != row["No"]]
-                            if save_data(sheet, df):
-                                st.session_state[confirm_key] = False
-                                st.success("✅ 削除しました")
-                                time.sleep(1)
-                                st.rerun()
-                    with col_no:
-                        if st.button("いいえ", key=f"no_{row['No']}"):
+            # 確認ダイアログ
+            if st.session_state[confirm_key]:
+                st.warning(f"⚠️ {row['名前']}さんを削除しますか？")
+                col_yes, col_no = st.columns(2)
+                with col_yes:
+                    if st.button("はい", key=f"yes_{row['No']}", type="primary"):
+                        df = df[df["No"] != row["No"]]
+                        if save_data(sheet, df):
                             st.session_state[confirm_key] = False
+                            st.success("✅ 削除しました")
+                            time.sleep(1)
                             st.rerun()
-            
-            # 変更があったか確認
-            if (first_party != row["1次会"] or 
-                second_party != row["2次会"] or 
-                comment != row["コメント"]):
-                df.at[idx, "1次会"] = first_party
-                df.at[idx, "2次会"] = second_party
-                df.at[idx, "コメント"] = comment
-                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                changes_made = True
-            
-            st.divider()
+                with col_no:
+                    if st.button("いいえ", key=f"no_{row['No']}"):
+                        st.session_state[confirm_key] = False
+                        st.rerun()
+        
+        # 変更があったか確認
+        if (first_party != row["1次会"] or 
+            second_party != row["2次会"] or 
+            comment != row["コメント"]):
+            df.at[idx, "1次会"] = first_party
+            df.at[idx, "2次会"] = second_party
+            df.at[idx, "コメント"] = comment
+            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            changes_made = True
+        
+        st.divider()
     
     # 変更を保存
     if changes_made:
