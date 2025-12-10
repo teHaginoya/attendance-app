@@ -989,7 +989,7 @@ def main():
     
     for idx, row in df.iterrows():
         # 1行全体をHTMLで作成
-        st.markdown(f'<div class="attendance-row">', unsafe_allow_html=True)
+        # st.markdown(f'<div class="attendance-row">', unsafe_allow_html=True)
         st.markdown(f'<div class="att-cell-no">{row["No"]}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="att-cell-name">{row["名前"]}</div>', unsafe_allow_html=True)
         
