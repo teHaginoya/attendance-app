@@ -201,6 +201,156 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
     }
     
+    /* テーブルスタイル */
+    .attendance-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        background-color: white;
+    }
+    
+    .attendance-table th {
+        background-color: #1f77b4;
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid #ddd;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    
+    .attendance-table td {
+        padding: 0.3rem;
+        border: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+    
+    .attendance-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .attendance-table tr:hover {
+        background-color: #f0f8ff;
+    }
+    
+    .table-no {
+        width: 8%;
+        font-weight: bold;
+    }
+    
+    .table-name {
+        width: 30%;
+        font-weight: bold;
+        text-align: left !important;
+        padding-left: 0.5rem !important;
+    }
+    
+    .table-first, .table-second {
+        width: 26%;
+    }
+    
+    .table-delete {
+        width: 10%;
+    }
+    
+    .table-button {
+        width: 100%;
+        padding: 0.3rem 0.5rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .table-button-secondary {
+        background-color: #f0f0f0;
+        color: #666;
+        border: 1px solid #ddd;
+    }
+    
+    .table-button-secondary:hover {
+        background-color: #e8f5e9;
+        border-color: #4caf50;
+        color: #2e7d32;
+    }
+    
+    .table-button-primary {
+        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%);
+        color: white;
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+    }
+    
+    .table-button-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+    }
+    
+    .table-button-delete {
+        background-color: transparent;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.2rem;
+    }
+    
+    .table-button-delete:hover {
+        transform: scale(1.2);
+    }
+    
+    /* スマホ対応 */
+    @media (max-width: 768px) {
+        .attendance-table {
+            font-size: 0.75rem;
+        }
+        
+        .attendance-table th {
+            padding: 0.3rem;
+            font-size: 0.75rem;
+        }
+        
+        .attendance-table td {
+            padding: 0.2rem;
+        }
+        
+        .table-button {
+            padding: 0.25rem 0.3rem;
+            font-size: 0.7rem;
+        }
+        
+        .table-name {
+            padding-left: 0.3rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .attendance-table {
+            font-size: 0.7rem;
+        }
+        
+        .attendance-table th {
+            padding: 0.25rem;
+            font-size: 0.7rem;
+        }
+        
+        .attendance-table td {
+            padding: 0.15rem;
+        }
+        
+        .table-button {
+            padding: 0.2rem 0.2rem;
+            font-size: 0.65rem;
+        }
+        
+        .table-button-delete {
+            font-size: 1rem;
+        }
+    }
+    
     /* スマホ対応 - レスポンシブデザイン */
     @media (max-width: 768px) {
         /* メインコンテナの余白調整 */
@@ -667,28 +817,38 @@ def main():
     
     st.markdown("---")
     
-    # テーブルヘッダー
-    header_cols = st.columns([0.6, 2, 1.2, 1.2, 0.7])
-    headers = ["No", "名前", "1次会", "2次会", "削除"]
-    for col, header in zip(header_cols, headers):
-        with col:
-            st.markdown(f"<div style='font-size:0.9rem;'><strong>{header}</strong></div>", unsafe_allow_html=True)
+    # テーブル形式で表示
+    st.markdown('<div style="overflow-x: auto;">', unsafe_allow_html=True)
+    
+    # ヘッダー行
+    cols = st.columns([0.5, 2, 1.2, 1.2, 0.8])
+    with cols[0]:
+        st.markdown("**No**")
+    with cols[1]:
+        st.markdown("**名前**")
+    with cols[2]:
+        st.markdown("**1次会**")
+    with cols[3]:
+        st.markdown("**2次会**")
+    with cols[4]:
+        st.markdown("**削除**")
+    
+    st.markdown('<hr style="margin: 0.2rem 0;">', unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
     
     for idx, row in df.iterrows():
-        # レコード全体の余白を最小化 - カラム幅を明示的に指定
-        col1, col2, col3, col4, col5 = st.columns([0.6, 2, 1.2, 1.2, 0.7])
+        cols = st.columns([0.5, 2, 1.2, 1.2, 0.8])
         
-        with col1:
-            st.markdown(f"<div class='col-no' style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
+        with cols[0]:
+            st.markdown(f"<div style='line-height:2.5rem;'>{row['No']}</div>", unsafe_allow_html=True)
         
-        with col2:
-            st.markdown(f"<div class='col-name' style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
+        with cols[1]:
+            st.markdown(f"<div style='line-height:2.5rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
         
-        with col3:
-            # 1次会ボタン - ユニークなクラスを追加
+        with cols[2]:
+            # 1次会ボタン
             if row["1次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -696,15 +856,16 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
-            st.markdown(f'<div class="col-first-party">', unsafe_allow_html=True)
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
                 first_party = not row["1次会"]
+                df.at[idx, "1次会"] = first_party
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
             else:
                 first_party = row["1次会"]
-            st.markdown('</div>', unsafe_allow_html=True)
         
-        with col4:
-            # 2次会ボタン - ユニークなクラスを追加
+        with cols[3]:
+            # 2次会ボタン
             if row["2次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -712,15 +873,15 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
-            st.markdown(f'<div class="col-second-party">', unsafe_allow_html=True)
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
                 second_party = not row["2次会"]
+                df.at[idx, "2次会"] = second_party
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
             else:
                 second_party = row["2次会"]
-            st.markdown('</div>', unsafe_allow_html=True)
         
-        with col5:
-            st.markdown(f'<div class="col-delete">', unsafe_allow_html=True)
+        with cols[4]:
             # 削除確認用のセッションステート
             confirm_key = f"confirm_delete_{row['No']}"
             if confirm_key not in st.session_state:
@@ -746,17 +907,10 @@ def main():
                     if st.button("いいえ", key=f"no_{row['No']}"):
                         st.session_state[confirm_key] = False
                         st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
         
-        # 変更があったか確認
-        if (first_party != row["1次会"] or 
-            second_party != row["2次会"]):
-            df.at[idx, "1次会"] = first_party
-            df.at[idx, "2次会"] = second_party
-            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            changes_made = True
-        
-        st.divider()
+        st.markdown('<hr style="margin: 0.1rem 0; border: none; border-top: 1px solid #eee;">', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # 変更を保存
     if changes_made:
