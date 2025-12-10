@@ -243,31 +243,61 @@ st.markdown("""
             font-size: 0.95rem;
         }
         
-        /* 各カラムごとの幅指定 */
+        /* カラムの余白を削減 */
+        [data-testid="column"] {
+            padding: 0 0.05rem !important;
+        }
+        
+        /* 各カラムごとに幅を個別指定（nth-child使用） */
+        /* No列 */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(1) {
+            flex: 0 0 10% !important;
+            max-width: 10% !important;
+        }
+        
+        /* 名前列 */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
+            flex: 0 0 30% !important;
+            max-width: 30% !important;
+        }
+        
+        /* 1次会列 */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(3) {
+            flex: 0 0 25% !important;
+            max-width: 25% !important;
+        }
+        
+        /* 2次会列 */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(4) {
+            flex: 0 0 25% !important;
+            max-width: 25% !important;
+        }
+        
+        /* 削除列 */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(5) {
+            flex: 0 0 10% !important;
+            max-width: 10% !important;
+        }
+        
+        /* 各カラムごとのスタイル */
         .col-no {
-            max-width: 40px;
-            font-size: 0.8rem !important;
+            font-size: 0.75rem !important;
         }
         
         .col-name {
-            font-size: 0.8rem !important;
+            font-size: 0.75rem !important;
         }
         
         .col-first-party button,
         .col-second-party button {
-            font-size: 0.7rem !important;
-            padding: 0.25rem 0.2rem !important;
+            font-size: 0.65rem !important;
+            padding: 0.25rem 0.1rem !important;
             white-space: nowrap;
         }
         
         .col-delete button {
-            font-size: 0.9rem !important;
-            padding: 0.2rem !important;
-        }
-        
-        /* カラムを画面幅に収める */
-        [data-testid="column"] {
-            padding: 0 0.1rem !important;
+            font-size: 0.85rem !important;
+            padding: 0.2rem 0.1rem !important;
         }
         
         /* 区切り線の余白をさらに削減 */
@@ -285,16 +315,42 @@ st.markdown("""
         }
         
         .header-style p {
-            display: none; /* サブタイトルを非表示 */
+            display: none;
         }
         
         /* メトリクスの値をさらに小さく */
         div[data-testid="metric-container"] label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+        }
+        
+        /* 各カラムごとに幅を調整（より小さい画面用） */
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(1) {
+            flex: 0 0 8% !important;
+            max-width: 8% !important;
+        }
+        
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
+            flex: 0 0 28% !important;
+            max-width: 28% !important;
+        }
+        
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(3) {
+            flex: 0 0 27% !important;
+            max-width: 27% !important;
+        }
+        
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(4) {
+            flex: 0 0 27% !important;
+            max-width: 27% !important;
+        }
+        
+        [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(5) {
+            flex: 0 0 10% !important;
+            max-width: 10% !important;
         }
         
         /* 各カラムのサイズをさらに小さく */
@@ -308,18 +364,18 @@ st.markdown("""
         
         .col-first-party button,
         .col-second-party button {
-            font-size: 0.65rem !important;
-            padding: 0.2rem 0.15rem !important;
+            font-size: 0.6rem !important;
+            padding: 0.2rem 0.05rem !important;
         }
         
         .col-delete button {
-            font-size: 0.85rem !important;
-            padding: 0.15rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.15rem 0.05rem !important;
         }
         
         /* カラム間の余白を最小に */
         [data-testid="column"] {
-            padding: 0 0.05rem !important;
+            padding: 0 0.02rem !important;
         }
     }
     
