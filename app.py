@@ -138,6 +138,35 @@ st.markdown("""
         margin-bottom: 0;
     }
     
+    /* 出席ボタンのカスタムスタイル */
+    div[data-testid="column"] button[kind="secondary"] {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    /* 出席済みボタン（Primary）のスタイル */
+    div[data-testid="column"] button[kind="primary"] {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        font-size: 0.85rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        transition: all 0.2s ease;
+    }
+    
+    div[data-testid="column"] button[kind="primary"]:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+    }
+    
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
@@ -447,20 +476,32 @@ def main():
             st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
         
         with col3:
-            first_party = st.checkbox(
-                "1次会",
-                value=row["1次会"],
-                key=f"first_{row['No']}",
-                label_visibility="collapsed"
-            )
+            # 1次会ボタン
+            if row["1次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "欠席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
+                first_party = not row["1次会"]
+            else:
+                first_party = row["1次会"]
         
         with col4:
-            second_party = st.checkbox(
-                "2次会",
-                value=row["2次会"],
-                key=f"second_{row['No']}",
-                label_visibility="collapsed"
-            )
+            # 2次会ボタン
+            if row["2次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "欠席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
+                second_party = not row["2次会"]
+            else:
+                second_party = row["2次会"]
         
         with col5:
             comment = st.text_input(
