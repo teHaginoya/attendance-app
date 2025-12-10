@@ -821,6 +821,9 @@ def main():
     <style>
     .attendance-table-container {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .attendance-row {
@@ -836,7 +839,10 @@ def main():
     .attendance-header {
         display: flex;
         align-items: center;
+        justify-content: center;
         width: 100%;
+        margin-left: auto;
+        margin-right: auto;
         font-weight: bold;
         background-color: #1f77b4;
         color: white;
