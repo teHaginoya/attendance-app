@@ -31,6 +31,35 @@ st.markdown("""
         margin-bottom: 0.2rem;
     }
     
+    /* stElementContainerの余白を完全に削除 */
+    .stElementContainer {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    div.st-emotion-cache-3pwa5w {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* ek2vi381クラスの余白も削除 */
+    .ek2vi381 {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* すべてのstから始まる要素コンテナの余白を削減 */
+    [class*="stElementContainer"] {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Streamlitのキャッシュクラスの余白も削除 */
+    [class*="st-emotion-cache"] {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    
     /* 行間の余白を削減 */
     .row-widget {
         margin-bottom: 0.3rem;
