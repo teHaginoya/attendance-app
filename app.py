@@ -136,7 +136,7 @@ st.markdown("""
         padding: 0.8rem;
         border-radius: 10px;
         color: white;
-        margin-bottom: 0.8rem;
+        margin-bottom: 0 !important;
     }
     
     .header-style h1 {
@@ -148,6 +148,12 @@ st.markdown("""
         font-size: 0.9rem;
         margin: 0;
         opacity: 0.9;
+    }
+    
+    /* ヘッダー後の要素を上に詰める */
+    .header-style + div {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
     
     /* テキストのサイズを小さく */
