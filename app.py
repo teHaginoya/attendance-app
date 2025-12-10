@@ -175,6 +175,25 @@ st.markdown("""
     hr {
         margin-top: 0.1rem;
         margin-bottom: 0.1rem;
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        height: 0;
+        padding: 0;
+    }
+    
+    /* stMarkdownContainerの高さと余白を削減 */
+    .stMarkdownContainer {
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+    
+    /* stMarkdown内のhrを最小化 */
+    .stMarkdown hr {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 0 !important;
+        min-height: 0 !important;
     }
     
     /* カラムの余白を削減 */
