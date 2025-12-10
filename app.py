@@ -39,15 +39,19 @@ st.markdown("""
         height: auto !important;
     }
     
-    div.st-emotion-cache-3pwa5w {
-        margin: 0 !important;
-        padding: 0 !important;
+    /* st-emotion-cache-3pwa5w ek2vi381 を非表示 */
+    div.st-emotion-cache-3pwa5w.ek2vi381 {
+        display: none !important;
     }
     
-    /* ek2vi381クラスの余白も削除 */
-    .ek2vi381 {
-        margin: 0 !important;
-        padding: 0 !important;
+    /* ek2vi381クラス単体も非表示の候補 */
+    .element-container.st-emotion-cache-3pwa5w.ek2vi381 {
+        display: none !important;
+    }
+    
+    /* 念のため、空のstElementContainerを非表示 */
+    .stElementContainer:empty {
+        display: none !important;
     }
     
     /* st-emotion-cache-18kf3utを中央揃えに */
