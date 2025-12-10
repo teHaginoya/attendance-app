@@ -852,9 +852,22 @@ def main():
     }
 
 /* セル内のstElementContainerの右余白も削除 */
-    .att-cell-first .stElementContainer,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .att-cell-second .stElementContainer,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .att-cell-delete .stElementContainer {
+.att-cell-first .stElementContainer,
+.att-cell-second .stElementContainer,
+.stElementContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* セル内のstElementContainerの右余白も削除 */
+.att-cell-first .stElementContainer,
+.att-cell-second .stElementContainer,
+.att-cell-delete .stElementContainer {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}.att-cell-delete .stElementContainer {
     margin-right: 0 !important;
     padding-right: 0 !important;
 }
