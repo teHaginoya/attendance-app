@@ -243,21 +243,31 @@ st.markdown("""
             font-size: 0.95rem;
         }
         
-        /* カラムを画面幅に収める */
-        [data-testid="column"] {
-            padding: 0 0.1rem !important;
+        /* 各カラムごとの幅指定 */
+        .col-no {
+            max-width: 40px;
+            font-size: 0.8rem !important;
         }
         
-        /* ボタンのサイズ調整 */
-        div[data-testid="column"] button {
+        .col-name {
+            font-size: 0.8rem !important;
+        }
+        
+        .col-first-party button,
+        .col-second-party button {
             font-size: 0.7rem !important;
             padding: 0.25rem 0.2rem !important;
             white-space: nowrap;
         }
         
-        /* テキストのフォントサイズ */
-        div[data-testid="column"] div {
-            font-size: 0.8rem !important;
+        .col-delete button {
+            font-size: 0.9rem !important;
+            padding: 0.2rem !important;
+        }
+        
+        /* カラムを画面幅に収める */
+        [data-testid="column"] {
+            padding: 0 0.1rem !important;
         }
         
         /* 区切り線の余白をさらに削減 */
@@ -287,15 +297,24 @@ st.markdown("""
             font-size: 0.85rem;
         }
         
-        /* ボタンをさらに小さく */
-        div[data-testid="column"] button {
+        /* 各カラムのサイズをさらに小さく */
+        .col-no {
+            font-size: 0.7rem !important;
+        }
+        
+        .col-name {
+            font-size: 0.7rem !important;
+        }
+        
+        .col-first-party button,
+        .col-second-party button {
             font-size: 0.65rem !important;
             padding: 0.2rem 0.15rem !important;
         }
         
-        /* テキストサイズ */
-        div[data-testid="column"] div {
-            font-size: 0.75rem !important;
+        .col-delete button {
+            font-size: 0.85rem !important;
+            padding: 0.15rem !important;
         }
         
         /* カラム間の余白を最小に */
@@ -593,7 +612,7 @@ def main():
     st.markdown("---")
     
     # テーブルヘッダー
-    header_cols = st.columns([1, 3, 1.5, 1.5, 1])
+    header_cols = st.columns([0.6, 2, 1.2, 1.2, 0.7])
     headers = ["No", "名前", "1次会", "2次会", "削除"]
     for col, header in zip(header_cols, headers):
         with col:
@@ -603,17 +622,17 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
-        # レコード全体の余白を最小化
-        col1, col2, col3, col4, col5 = st.columns([1, 3, 1.5, 1.5, 1])
+        # レコード全体の余白を最小化 - カラム幅を明示的に指定
+        col1, col2, col3, col4, col5 = st.columns([0.6, 2, 1.2, 1.2, 0.7])
         
         with col1:
-            st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='col-no' style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
         
         with col2:
-            st.markdown(f"<div style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='col-name' style='padding:0; margin:0; line-height:1.8rem; font-size:0.9rem;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
         
         with col3:
-            # 1次会ボタン
+            # 1次会ボタン - ユニークなクラスを追加
             if row["1次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -621,13 +640,15 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
+            st.markdown(f'<div class="col-first-party">', unsafe_allow_html=True)
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
                 first_party = not row["1次会"]
             else:
                 first_party = row["1次会"]
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col4:
-            # 2次会ボタン
+            # 2次会ボタン - ユニークなクラスを追加
             if row["2次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -635,12 +656,15 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
+            st.markdown(f'<div class="col-second-party">', unsafe_allow_html=True)
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
                 second_party = not row["2次会"]
             else:
                 second_party = row["2次会"]
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col5:
+            st.markdown(f'<div class="col-delete">', unsafe_allow_html=True)
             # 削除確認用のセッションステート
             confirm_key = f"confirm_delete_{row['No']}"
             if confirm_key not in st.session_state:
@@ -666,8 +690,9 @@ def main():
                     if st.button("いいえ", key=f"no_{row['No']}"):
                         st.session_state[confirm_key] = False
                         st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
         
-        # 変更があったか確認（コメントの比較を削除）
+        # 変更があったか確認
         if (first_party != row["1次会"] or 
             second_party != row["2次会"]):
             df.at[idx, "1次会"] = first_party
