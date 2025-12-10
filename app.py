@@ -146,25 +146,35 @@ st.markdown("""
         border-radius: 8px;
         font-weight: 600;
         transition: all 0.2s ease;
+        background-color: #f0f0f0;
+        color: #666;
+        border: 2px solid #ddd;
+    }
+    
+    div[data-testid="column"] button[kind="secondary"]:hover {
+        background-color: #e8f5e9;
+        border-color: #4caf50;
+        color: #2e7d32;
     }
     
     /* 出席済みボタン（Primary）のスタイル */
     div[data-testid="column"] button[kind="primary"] {
         width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%);
         color: white;
         border: none;
         font-size: 0.85rem;
         padding: 0.3rem 0.5rem;
         border-radius: 8px;
         font-weight: 600;
-        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
         transition: all 0.2s ease;
     }
     
     div[data-testid="column"] button[kind="primary"]:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+        background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%);
     }
     
     /* メトリクスカードのスタイル */
@@ -481,7 +491,7 @@ def main():
                 button_label = "✓ 出席"
                 button_type = "primary"
             else:
-                button_label = "欠席"
+                button_label = "出席"
                 button_type = "secondary"
             
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
@@ -495,7 +505,7 @@ def main():
                 button_label = "✓ 出席"
                 button_type = "primary"
             else:
-                button_label = "欠席"
+                button_label = "出席"
                 button_type = "secondary"
             
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
