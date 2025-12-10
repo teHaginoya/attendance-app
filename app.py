@@ -843,6 +843,21 @@ def main():
         padding: 0.5rem 0;
         border-radius: 5px;
     }
+
+    .stElementContainer {
+        margin: 0 !important;
+        padding: 0 !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+
+/* セル内のstElementContainerの右余白も削除 */
+    .att-cell-first .stElementContainer,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .att-cell-second .stElementContainer,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .att-cell-delete .stElementContainer {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
     
     .att-cell-no {
         flex: 0 0 8% !important;
@@ -852,8 +867,6 @@ def main():
     }
     
     .att-cell-name {
-        display: flex;
-        align-items: center;
         flex: 0 0 25% !important;
         max-width: 25% !important;
         font-weight: bold;
