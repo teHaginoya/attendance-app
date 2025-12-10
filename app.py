@@ -53,7 +53,6 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     .element-container {
-        margin-bottom: 0.2rem;
     }
     
     /* stElementContainerの余白を完全に削除 */
