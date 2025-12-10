@@ -882,7 +882,7 @@ def main():
         flex: 0 0 8% !important;
         max-width: 8% !important;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
     .att-cell-name {
@@ -890,25 +890,28 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
     .att-cell-first {
         flex: 0 0 25% !important;
         max-width: 25% !important;
         text-align: center;
+        font-size: 1rem;
     }
     
     .att-cell-second {
         flex: 0 0 25% !important;
         max-width: 25% !important;
         text-align: center;
+        font-size: 1rem;
     }
     
     .att-cell-delete {
         flex: 0 0 7% !important;
         max-width: 7% !important;
         text-align: center;
+        font-size: 1rem;
     }
     
     /* ボタンコンテナもFlexboxに */
