@@ -820,7 +820,12 @@ def main():
     # テーブル形式で表示
     st.markdown("""
     <style>
-    .table-row {
+    .attendance-table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    .attendance-row {
         display: flex;
         align-items: center;
         width: 100%;
@@ -829,7 +834,7 @@ def main():
         min-height: 2.5rem;
     }
     
-    .table-header {
+    .attendance-header {
         display: flex;
         align-items: center;
         width: 100%;
@@ -841,77 +846,85 @@ def main():
         margin-bottom: 0.5rem;
     }
     
-    .cell-no {
+    .att-cell-no {
         flex: 0 0 8%;
         text-align: center;
         padding: 0 0.2rem;
+        font-size: 0.9rem;
     }
     
-    .cell-name {
+    .att-cell-name {
         flex: 0 0 30%;
         text-align: left;
         padding: 0 0.5rem;
         font-weight: bold;
+        font-size: 0.9rem;
     }
     
-    .cell-first {
+    .att-cell-first {
         flex: 0 0 26%;
         text-align: center;
         padding: 0 0.2rem;
     }
     
-    .cell-second {
+    .att-cell-second {
         flex: 0 0 26%;
         text-align: center;
         padding: 0 0.2rem;
     }
     
-    .cell-delete {
+    .att-cell-delete {
         flex: 0 0 10%;
         text-align: center;
         padding: 0 0.2rem;
     }
     
     /* 出席ボタン専用のスタイル */
-    .attendance-button-container button {
+    .att-btn-first button,
+    .att-btn-second button {
         font-size: 0.7rem !important;
         padding: 0.2rem 0.3rem !important;
         height: 1.8rem !important;
         min-height: 1.8rem !important;
         line-height: 1.2 !important;
         white-space: nowrap !important;
+        width: 100% !important;
     }
     
     /* 削除ボタン専用のスタイル */
-    .delete-button-container button {
+    .att-btn-delete button {
         font-size: 1rem !important;
         padding: 0.1rem 0.3rem !important;
         height: 1.8rem !important;
         min-height: 1.8rem !important;
+        width: 100% !important;
     }
     
     /* 出席ボタンのPrimary/Secondaryスタイル */
-    .attendance-button-container button[kind="primary"] {
+    .att-btn-first button[kind="primary"],
+    .att-btn-second button[kind="primary"] {
         background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
         color: white !important;
         border: none !important;
         box-shadow: 0 1px 2px rgba(76, 175, 80, 0.3) !important;
     }
     
-    .attendance-button-container button[kind="secondary"] {
+    .att-btn-first button[kind="secondary"],
+    .att-btn-second button[kind="secondary"] {
         background-color: #f0f0f0 !important;
         color: #666 !important;
         border: 1px solid #ddd !important;
     }
     
     @media (max-width: 768px) {
-        .cell-no { flex: 0 0 10%; font-size: 0.75rem; }
-        .cell-name { flex: 0 0 30%; font-size: 0.75rem; }
-        .cell-first { flex: 0 0 25%; }
-        .cell-second { flex: 0 0 25%; }
-        .cell-delete { flex: 0 0 10%; }
+        .att-cell-no { flex: 0 0 10%; font-size: 0.75rem; }
+        .att-cell-name { flex: 0 0 30%; font-size: 0.75rem; }
+        .att-cell-first { flex: 0 0 25%; }
+        .att-cell-second { flex: 0 0 25%; }
+        .att-cell-delete { flex: 0 0 10%; }
         
-        .attendance-button-container button {
+        .att-btn-first button,
+        .att-btn-second button {
             font-size: 0.65rem !important;
             padding: 0.15rem 0.2rem !important;
             height: 1.6rem !important;
@@ -920,21 +933,22 @@ def main():
     }
     
     @media (max-width: 480px) {
-        .table-row { padding: 0.15rem 0; min-height: 2.2rem; }
-        .cell-no { flex: 0 0 8%; font-size: 0.7rem; padding: 0 0.1rem; }
-        .cell-name { flex: 0 0 28%; font-size: 0.7rem; padding: 0 0.2rem; }
-        .cell-first { flex: 0 0 27%; }
-        .cell-second { flex: 0 0 27%; }
-        .cell-delete { flex: 0 0 10%; }
+        .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
+        .att-cell-no { flex: 0 0 8%; font-size: 0.7rem; padding: 0 0.1rem; }
+        .att-cell-name { flex: 0 0 28%; font-size: 0.7rem; padding: 0 0.2rem; }
+        .att-cell-first { flex: 0 0 27%; }
+        .att-cell-second { flex: 0 0 27%; }
+        .att-cell-delete { flex: 0 0 10%; }
         
-        .attendance-button-container button {
+        .att-btn-first button,
+        .att-btn-second button {
             font-size: 0.6rem !important;
             padding: 0.1rem 0.15rem !important;
             height: 1.5rem !important;
             min-height: 1.5rem !important;
         }
         
-        .delete-button-container button {
+        .att-btn-delete button {
             font-size: 0.9rem !important;
             height: 1.5rem !important;
             min-height: 1.5rem !important;
@@ -945,12 +959,12 @@ def main():
     
     # ヘッダー行
     st.markdown("""
-    <div class="table-header">
-        <div class="cell-no">No</div>
-        <div class="cell-name">名前</div>
-        <div class="cell-first">1次会</div>
-        <div class="cell-second">2次会</div>
-        <div class="cell-delete">削除</div>
+    <div class="attendance-header">
+        <div class="att-cell-no">No</div>
+        <div class="att-cell-name">名前</div>
+        <div class="att-cell-first">1次会</div>
+        <div class="att-cell-second">2次会</div>
+        <div class="att-cell-delete">削除</div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -958,18 +972,19 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
-        # 各行をフレックスボックスで配置
-        cols = st.columns([0.08, 0.30, 0.26, 0.26, 0.10])
+        # 行の開始
+        row_html = f"""
+        <div class="attendance-row">
+            <div class="att-cell-no">{row['No']}</div>
+            <div class="att-cell-name">{row['名前']}</div>
+            <div class="att-cell-first">
+        """
+        st.markdown(row_html, unsafe_allow_html=True)
         
-        with cols[0]:
-            st.markdown(f'<div class="cell-no" style="line-height: 2.2rem;">{row["No"]}</div>', unsafe_allow_html=True)
-        
-        with cols[1]:
-            st.markdown(f'<div class="cell-name" style="line-height: 2.2rem;">{row["名前"]}</div>', unsafe_allow_html=True)
-        
-        with cols[2]:
-            st.markdown('<div class="attendance-button-container">', unsafe_allow_html=True)
-            # 1次会ボタン
+        # 1次会ボタン（インラインで配置）
+        col_first = st.container()
+        with col_first:
+            st.markdown('<div class="att-btn-first">', unsafe_allow_html=True)
             if row["1次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -977,15 +992,19 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
-            if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
+            if st.button(button_label, key=f"first_{row['No']}", type=button_type):
                 df.at[idx, "1次会"] = not row["1次会"]
                 df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 changes_made = True
             st.markdown('</div>', unsafe_allow_html=True)
         
-        with cols[3]:
-            st.markdown('<div class="attendance-button-container">', unsafe_allow_html=True)
-            # 2次会ボタン
+        # 1次会セルを閉じて2次会セルを開く
+        st.markdown('</div><div class="att-cell-second">', unsafe_allow_html=True)
+        
+        # 2次会ボタン
+        col_second = st.container()
+        with col_second:
+            st.markdown('<div class="att-btn-second">', unsafe_allow_html=True)
             if row["2次会"]:
                 button_label = "✓ 出席"
                 button_type = "primary"
@@ -993,40 +1012,46 @@ def main():
                 button_label = "出席"
                 button_type = "secondary"
             
-            if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
+            if st.button(button_label, key=f"second_{row['No']}", type=button_type):
                 df.at[idx, "2次会"] = not row["2次会"]
                 df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 changes_made = True
             st.markdown('</div>', unsafe_allow_html=True)
         
-        with cols[4]:
-            st.markdown('<div class="delete-button-container">', unsafe_allow_html=True)
-            # 削除確認用のセッションステート
+        # 2次会セルを閉じて削除セルを開く
+        st.markdown('</div><div class="att-cell-delete">', unsafe_allow_html=True)
+        
+        # 削除ボタン
+        col_delete = st.container()
+        with col_delete:
+            st.markdown('<div class="att-btn-delete">', unsafe_allow_html=True)
             confirm_key = f"confirm_delete_{row['No']}"
             if confirm_key not in st.session_state:
                 st.session_state[confirm_key] = False
             
-            # 削除ボタン
             if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
                 st.session_state[confirm_key] = True
             st.markdown('</div>', unsafe_allow_html=True)
-            
-            # 確認ダイアログ
-            if st.session_state[confirm_key]:
-                st.warning(f"⚠️ {row['名前']}さんを削除しますか？")
-                col_yes, col_no = st.columns(2)
-                with col_yes:
-                    if st.button("はい", key=f"yes_{row['No']}", type="primary"):
-                        df = df[df["No"] != row["No"]]
-                        if save_data(sheet, df):
-                            st.session_state[confirm_key] = False
-                            st.success("✅ 削除しました")
-                            time.sleep(1)
-                            st.rerun()
-                with col_no:
-                    if st.button("いいえ", key=f"no_{row['No']}"):
+        
+        # 行を閉じる
+        st.markdown('</div></div>', unsafe_allow_html=True)
+        
+        # 削除確認ダイアログ
+        if st.session_state[confirm_key]:
+            st.warning(f"⚠️ {row['名前']}さんを削除しますか？")
+            col_yes, col_no = st.columns(2)
+            with col_yes:
+                if st.button("はい", key=f"yes_{row['No']}", type="primary"):
+                    df = df[df["No"] != row["No"]]
+                    if save_data(sheet, df):
                         st.session_state[confirm_key] = False
+                        st.success("✅ 削除しました")
+                        time.sleep(1)
                         st.rerun()
+            with col_no:
+                if st.button("いいえ", key=f"no_{row['No']}"):
+                    st.session_state[confirm_key] = False
+                    st.rerun()
     
     # 変更を保存
     if changes_made:
