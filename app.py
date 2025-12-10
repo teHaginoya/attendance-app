@@ -565,8 +565,7 @@ def main():
         align-items: center !important;
         width: 100% !important;
         border-bottom: 1px solid #eee;
-        padding: 0.2rem 0;
-        min-height: 2.5rem;
+        min-height: 0.5rem;
         gap: 0;
     }
     
