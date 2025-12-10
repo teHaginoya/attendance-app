@@ -722,7 +722,7 @@ def main():
     }
     
     @media (max-width: 480px) {
-        .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
+        .attendance-row {}
         .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
         .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
         .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
