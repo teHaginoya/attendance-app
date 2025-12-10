@@ -53,6 +53,7 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     .element-container {
+        margin-bottom: 0.2rem;
     }
     
     /* stElementContainerの余白を完全に削除 */
@@ -86,7 +87,8 @@ st.markdown("""
     [class*="stElementContainer"] {
         margin: 0 !important;
         padding: 0 !important;
-        min-height: 1.8rem !important;
+        min-height: 0 !important;
+        max-height: fit-content !important;
     }
     
     /* Streamlitのキャッシュクラスの余白も削除 */
@@ -241,11 +243,6 @@ st.markdown("""
         padding-top: 0 !important;
     }
     
-    /* テキストのサイズを小さく */
-    .stMarkdown {
-        font-size: 0.1rem;
-    }
-    
     /* セレクトボックスのサイズを小さく */
     .stSelectbox select {
         font-size: 0.9rem;
@@ -269,26 +266,10 @@ st.markdown("""
         min-height: 0 !important;
     }
     
-    /* stMarkdown内のhrを最小化 */
-    .stMarkdown hr {
-        margin: 0 !important;
-        padding: 0 !important;
-        height: 0 !important;
-        min-height: 0 !important;
-    }
-    
     /* カラムの余白を削減 */
     [data-testid="column"] {
         padding-top: 0;
         padding-bottom: 0;
-    }
-    
-    /* コンテナの余白を削減 */
-    [data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
-    }
-    
-    /* stContainerの余白を削除 */
-    [data-testid="stVerticalBlock"] > div {
     }
     
     /* スマホ対応 - レスポンシブデザイン */
@@ -560,11 +541,19 @@ def main():
     
     .attendance-row {
         display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
         align-items: center !important;
         width: 100% !important;
         border-bottom: 1px solid #eee;
-        min-height: 0.5rem;
+        padding: 0.2rem 0;
+        min-height: 2.5rem;
         gap: 0;
+    }
+    
+    /* attendance-row内の全ての子要素をflexアイテムに */
+    .attendance-row > * {
+        flex-shrink: 0 !important;
     }
     
     .attendance-header {
@@ -579,6 +568,7 @@ def main():
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
+        margin-bottom: 0.5rem;
     }
 
     .stElementContainer {
@@ -586,14 +576,20 @@ def main():
         padding: 0 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: fit-content !important;
     }
 
     /* セル内のstElementContainerの右余白も削除 */
     .att-cell-first .stElementContainer,
     .att-cell-second .stElementContainer,
     .att-cell-delete .stElementContainer {
-        margin-right: 0 !important;
-        padding-right: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: fit-content !important;
     }
     
     .att-cell-no {
@@ -601,6 +597,7 @@ def main():
         max-width: 8% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-name {
@@ -609,6 +606,7 @@ def main():
         text-align: center;
         font-weight: bold;
         font-size: 1rem;
+        padding: 0 0.5rem;
     }
     
     .att-cell-first {
@@ -616,6 +614,7 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-second {
@@ -623,6 +622,7 @@ def main():
         max-width: 25% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     .att-cell-delete {
@@ -630,6 +630,7 @@ def main():
         max-width: 10% !important;
         text-align: center;
         font-size: 1rem;
+        padding: 0 0.2rem;
     }
     
     /* ヘッダーの各セルの文字サイズを統一 */
@@ -639,6 +640,29 @@ def main():
     .attendance-header .att-cell-second,
     .attendance-header .att-cell-delete {
         font-size: 1rem;
+    }
+    
+    /* Noと名前のstMarkdownブロックをインライン化 */
+    .attendance-row > .stMarkdown,
+    .attendance-row > div[data-testid="stMarkdown"],
+    .attendance-row > div[data-testid="stMarkdownContainer"] {
+        display: inline-block !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* attendance-row直下の全てのdivをインライン化 */
+    .attendance-row > div {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* att-cell-*が含まれるdivはインライン */
+    div[class*="att-cell-"] {
+        display: inline-block !important;
+        vertical-align: middle !important;
     }
     
     /* ボタンコンテナもFlexboxに */
@@ -699,7 +723,7 @@ def main():
         .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.75rem; }
         .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 7% !important; max-width: 7% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
@@ -720,12 +744,12 @@ def main():
     }
     
     @media (max-width: 480px) {
-        .attendance-row {}
+        .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
         .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
         .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
         .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
         .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 7% !important; max-width: 7% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
