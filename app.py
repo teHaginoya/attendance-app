@@ -843,7 +843,6 @@ def main():
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
-        margin-bottom: 0.5rem;
     }
     
     .att-cell-no {
@@ -854,9 +853,8 @@ def main():
     }
     
     .att-cell-name {
-        flex: 0 0 28% !important;
-        max-width: 28% !important;
-        text-align: left;
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
         font-weight: bold;
         font-size: 0.9rem;
     }
@@ -874,8 +872,8 @@ def main():
     }
     
     .att-cell-delete {
-        flex: 0 0 9% !important;
-        max-width: 9% !important;
+        flex: 0 0 7% !important;
+        max-width: 7% !important;
         text-align: center;
     }
     
