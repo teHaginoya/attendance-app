@@ -20,21 +20,6 @@ st.markdown("""
         padding-top: 2rem;
     }
     
-    /* 出席者カードのスタイル */
-    .attendee-card {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 0.8rem;
-        border: 1px solid #e0e0e0;
-        transition: all 0.3s ease;
-    }
-    
-    .attendee-card:hover {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-color: #1f77b4;
-    }
-    
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
@@ -56,18 +41,6 @@ st.markdown("""
     .stButton button {
         border-radius: 5px;
         transition: all 0.3s ease;
-    }
-    
-    /* テーブルヘッダー風のスタイル */
-    .table-header {
-        background-color: #1f77b4;
-        color: white;
-        padding: 0.8rem;
-        border-radius: 8px;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -275,8 +248,6 @@ def main():
     
     for idx, row in df.iterrows():
         with st.container():
-            st.markdown('<div class="attendee-card">', unsafe_allow_html=True)
-            
             col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
             
             with col1:
@@ -347,7 +318,7 @@ def main():
                 df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 changes_made = True
             
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.divider()
     
     # 変更を保存
     if changes_made:
