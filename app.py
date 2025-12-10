@@ -285,12 +285,10 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     [data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
-        gap: 0.1rem;
     }
     
     /* stContainerの余白を削除 */
     [data-testid="stVerticalBlock"] > div {
-        gap: 0.1rem;
     }
     
     /* スマホ対応 - レスポンシブデザイン */
