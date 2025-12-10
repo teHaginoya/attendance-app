@@ -146,35 +146,58 @@ st.markdown("""
         border-radius: 8px;
         font-weight: 600;
         transition: all 0.2s ease;
-        background-color: #f0f0f0;
-        color: #666;
-        border: 2px solid #ddd;
+        background-color: #f0f0f0 !important;
+        color: #666 !important;
+        border: 2px solid #ddd !important;
     }
     
     div[data-testid="column"] button[kind="secondary"]:hover {
-        background-color: #e8f5e9;
-        border-color: #4caf50;
-        color: #2e7d32;
+        background-color: #e8f5e9 !important;
+        border-color: #4caf50 !important;
+        color: #2e7d32 !important;
     }
     
-    /* 出席済みボタン（Primary）のスタイル */
-    div[data-testid="column"] button[kind="primary"] {
+    /* 出席済みボタン（Primary）のスタイル - より強力に */
+    div[data-testid="column"] button[kind="primary"],
+    div[data-testid="column"] button[kind="primary"]:focus,
+    div[data-testid="column"] button[kind="primary"]:active {
         width: 100%;
-        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%);
-        color: white;
-        border: none;
+        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
+        color: white !important;
+        border: none !important;
         font-size: 0.85rem;
         padding: 0.3rem 0.5rem;
         border-radius: 8px;
         font-weight: 600;
-        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
         transition: all 0.2s ease;
     }
     
     div[data-testid="column"] button[kind="primary"]:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
-        background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4) !important;
+        background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%) !important;
+    }
+    
+    /* Streamlitのデフォルトprimaryボタンスタイルを上書き */
+    button[kind="primary"] {
+        background-color: #4caf50 !important;
+        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
+        border-color: #4caf50 !important;
+    }
+    
+    button[kind="primary"]:hover {
+        background-color: #66bb6a !important;
+        background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%) !important;
+        border-color: #66bb6a !important;
+    }
+    
+    button[kind="primary"]:focus,
+    button[kind="primary"]:active {
+        background-color: #4caf50 !important;
+        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
+        border-color: #4caf50 !important;
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
     }
     
     /* メトリクスカードのスタイル */
