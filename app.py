@@ -104,11 +104,34 @@ def load_data(sheet):
             return pd.DataFrame(columns=["No", "名前", "1次会", "2次会", "コメント", "更新日時"])
         
         df = pd.DataFrame(data)
+        
+        # 古い形式から新しい形式への変換
+        if "ID" in df.columns and "No" not in df.columns:
+            df = df.rename(columns={"ID": "No"})
+        
+        if "出席" in df.columns and "1次会" not in df.columns:
+            # 出席列を1次会に変換、2次会は新規作成
+            df = df.rename(columns={"出席": "1次会"})
+            df["2次会"] = False
+        
+        # 必須カラムの確認と追加
+        required_columns = ["No", "名前", "1次会", "2次会", "コメント", "更新日時"]
+        for col in required_columns:
+            if col not in df.columns:
+                if col in ["1次会", "2次会"]:
+                    df[col] = False
+                else:
+                    df[col] = ""
+        
         # 出席列をブール型に変換
         if "1次会" in df.columns:
             df["1次会"] = df["1次会"].astype(str).str.upper() == "TRUE"
         if "2次会" in df.columns:
             df["2次会"] = df["2次会"].astype(str).str.upper() == "TRUE"
+        
+        # カラムの順序を統一
+        df = df[required_columns]
+        
         return df
     except Exception as e:
         st.error(f"データ読み込みエラー: {e}")
@@ -209,16 +232,20 @@ def main():
         return
     
     # ソート処理
-    if sort_option == "No順":
-        df = df.sort_values("No")
-    elif sort_option == "名前順（あいうえお）":
-        df = df.sort_values("名前")
-    elif sort_option == "1次会出席者優先":
-        df = df.sort_values(["1次会", "No"], ascending=[False, True])
-    elif sort_option == "2次会出席者優先":
-        df = df.sort_values(["2次会", "No"], ascending=[False, True])
-    
-    df = df.reset_index(drop=True)
+    try:
+        if sort_option == "No順":
+            df = df.sort_values("No")
+        elif sort_option == "名前順（あいうえお）":
+            df = df.sort_values("名前")
+        elif sort_option == "1次会出席者優先":
+            df = df.sort_values(["1次会", "No"], ascending=[False, True])
+        elif sort_option == "2次会出席者優先":
+            df = df.sort_values(["2次会", "No"], ascending=[False, True])
+        
+        df = df.reset_index(drop=True)
+    except Exception as e:
+        st.warning(f"ソートエラー: {e}")
+        # ソートに失敗してもそのまま表示を続ける
     
     # 統計情報
     col1, col2, col3, col4 = st.columns(4)
@@ -242,8 +269,6 @@ def main():
     for col, header in zip(header_cols, headers):
         with col:
             st.markdown(f"**{header}**")
-    
-    st.markdown("---")
     
     # 出席簿フォーム
     changes_made = False
@@ -286,12 +311,31 @@ def main():
                 )
             
             with col6:
+                # 削除確認用のセッションステート
+                confirm_key = f"confirm_delete_{row['No']}"
+                if confirm_key not in st.session_state:
+                    st.session_state[confirm_key] = False
+                
+                # 削除ボタン
                 if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
-                    df = df[df["No"] != row["No"]]
-                    if save_data(sheet, df):
-                        st.success("✅ 削除しました")
-                        time.sleep(1)
-                        st.rerun()
+                    st.session_state[confirm_key] = True
+                
+                # 確認ダイアログ
+                if st.session_state[confirm_key]:
+                    st.warning(f"⚠️ {row['名前']}さんを削除しますか？")
+                    col_yes, col_no = st.columns(2)
+                    with col_yes:
+                        if st.button("はい", key=f"yes_{row['No']}", type="primary"):
+                            df = df[df["No"] != row["No"]]
+                            if save_data(sheet, df):
+                                st.session_state[confirm_key] = False
+                                st.success("✅ 削除しました")
+                                time.sleep(1)
+                                st.rerun()
+                    with col_no:
+                        if st.button("いいえ", key=f"no_{row['No']}"):
+                            st.session_state[confirm_key] = False
+                            st.rerun()
             
             # 変更があったか確認
             if (first_party != row["1次会"] or 
