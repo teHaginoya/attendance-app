@@ -154,30 +154,33 @@ def main():
     
     for idx, row in df.iterrows():
         with st.container():
-            col1, col2, col3, col4 = st.columns([1, 3, 4, 1])
+            col1, col2, col3, col4 = st.columns([0.5, 2, 5, 0.5])
             
             with col1:
-                st.write(f"**ID: {row['ID']}**")
+                st.write(f"**{row['ID']}**")
             
             with col2:
-                st.write(f"### {row['名前']}")
+                st.write(f"**{row['名前']}**")
             
             with col3:
-                # チェックボックス
-                attended = st.checkbox(
-                    "出席",
-                    value=row["出席"],
-                    key=f"attend_{row['ID']}"
-                )
+                # チェックボックスとコメントを横並びに
+                subcol1, subcol2 = st.columns([1, 4])
                 
-                # コメント入力
-                comment = st.text_input(
-                    "コメント",
-                    value=row["コメント"],
-                    key=f"comment_{row['ID']}",
-                    label_visibility="collapsed",
-                    placeholder="コメントを入力..."
-                )
+                with subcol1:
+                    attended = st.checkbox(
+                        "出席",
+                        value=row["出席"],
+                        key=f"attend_{row['ID']}"
+                    )
+                
+                with subcol2:
+                    comment = st.text_input(
+                        "コメント",
+                        value=row["コメント"],
+                        key=f"comment_{row['ID']}",
+                        label_visibility="collapsed",
+                        placeholder="コメントを入力..."
+                    )
                 
                 # 変更があったか確認
                 if attended != row["出席"] or comment != row["コメント"]:
@@ -195,7 +198,7 @@ def main():
                         time.sleep(1)
                         st.rerun()
             
-            st.markdown("---")
+            st.divider()
     
     # 変更を保存
     if changes_made:
