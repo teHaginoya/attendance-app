@@ -12,6 +12,66 @@ st.set_page_config(
     layout="wide"
 )
 
+# カスタムCSS
+st.markdown("""
+    <style>
+    /* メインコンテナのスタイル */
+    .main {
+        padding-top: 2rem;
+    }
+    
+    /* 出席者カードのスタイル */
+    .attendee-card {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+    
+    .attendee-card:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-color: #1f77b4;
+    }
+    
+    /* メトリクスカードのスタイル */
+    div[data-testid="metric-container"] {
+        background-color: #f0f8ff;
+        border-radius: 10px;
+        padding: 1rem;
+        border: 2px solid #1f77b4;
+    }
+    
+    /* ヘッダーのスタイル */
+    .header-style {
+        background: linear-gradient(90deg, #1f77b4 0%, #3498db 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 2rem;
+    }
+    
+    /* ボタンのスタイル調整 */
+    .stButton button {
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    /* テーブルヘッダー風のスタイル */
+    .table-header {
+        background-color: #1f77b4;
+        color: white;
+        padding: 0.8rem;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Google Sheets接続設定
 @st.cache_resource
 def get_google_sheets_client():
@@ -41,23 +101,26 @@ def load_data(sheet):
         data = sheet.get_all_records()
         if not data:
             # データが空の場合は空のDataFrameを返す
-            return pd.DataFrame(columns=["ID", "名前", "出席", "コメント", "更新日時"])
+            return pd.DataFrame(columns=["No", "名前", "1次会", "2次会", "コメント", "更新日時"])
         
         df = pd.DataFrame(data)
         # 出席列をブール型に変換
-        if "出席" in df.columns:
-            df["出席"] = df["出席"].astype(str).str.upper() == "TRUE"
+        if "1次会" in df.columns:
+            df["1次会"] = df["1次会"].astype(str).str.upper() == "TRUE"
+        if "2次会" in df.columns:
+            df["2次会"] = df["2次会"].astype(str).str.upper() == "TRUE"
         return df
     except Exception as e:
         st.error(f"データ読み込みエラー: {e}")
-        return pd.DataFrame(columns=["ID", "名前", "出席", "コメント", "更新日時"])
+        return pd.DataFrame(columns=["No", "名前", "1次会", "2次会", "コメント", "更新日時"])
 
 def save_data(sheet, df):
     """DataFrameをスプレッドシートに保存"""
     try:
         # 出席列をTRUE/FALSEの文字列に変換
         df_copy = df.copy()
-        df_copy["出席"] = df_copy["出席"].apply(lambda x: "TRUE" if x else "FALSE")
+        df_copy["1次会"] = df_copy["1次会"].apply(lambda x: "TRUE" if x else "FALSE")
+        df_copy["2次会"] = df_copy["2次会"].apply(lambda x: "TRUE" if x else "FALSE")
         
         # ヘッダーとデータを結合
         data_to_save = [df_copy.columns.tolist()] + df_copy.values.tolist()
@@ -71,8 +134,8 @@ def save_data(sheet, df):
         return False
 
 def main():
-    st.title("📝 出席簿アプリ")
-    st.markdown("---")
+    # タイトル
+    st.markdown('<div class="header-style"><h1 style="margin:0;">📝 出席簿アプリ</h1><p style="margin:0; opacity:0.9;">参加者の出席状況を管理</p></div>', unsafe_allow_html=True)
     
     # Google Sheetsクライアント取得
     client = get_google_sheets_client()
@@ -95,57 +158,90 @@ def main():
         st.error(f"スプレッドシートを開けません: {e}")
         return
     
-    # サイドバー：新規参加者追加
+    # サイドバー
     with st.sidebar:
         st.header("➕ 新規参加者追加")
-        new_name = st.text_input("名前")
-        if st.button("追加", type="primary"):
+        new_name = st.text_input("名前", key="new_name_input")
+        if st.button("追加", type="primary", use_container_width=True):
             if new_name:
                 df = load_data(sheet)
-                new_id = df["ID"].max() + 1 if len(df) > 0 else 1
+                new_no = df["No"].max() + 1 if len(df) > 0 else 1
                 new_row = pd.DataFrame([{
-                    "ID": new_id,
+                    "No": new_no,
                     "名前": new_name,
-                    "出席": False,
+                    "1次会": False,
+                    "2次会": False,
                     "コメント": "",
                     "更新日時": ""
                 }])
                 df = pd.concat([df, new_row], ignore_index=True)
                 if save_data(sheet, df):
-                    st.success(f"{new_name}さんを追加しました！")
+                    st.success(f"✅ {new_name}さんを追加しました！")
                     time.sleep(1)
                     st.rerun()
             else:
-                st.warning("名前を入力してください")
+                st.warning("⚠️ 名前を入力してください")
         
         st.markdown("---")
-        st.header("🔄 更新")
+        
+        # ソート機能
+        st.header("🔄 表示順序")
+        sort_option = st.selectbox(
+            "並び替え",
+            ["No順", "名前順（あいうえお）", "1次会出席者優先", "2次会出席者優先"],
+            key="sort_option"
+        )
+        
+        st.markdown("---")
+        
+        st.header("🔄 データ更新")
         if st.button("最新データを取得", use_container_width=True):
             st.rerun()
         
         st.markdown("---")
         st.info("💡 ヒント: 複数人で同時に使用する場合は、定期的に「最新データを取得」ボタンを押してください。")
     
-    # メインエリア：出席簿表示
-    st.header("📋 出席状況")
-    
     # データ読み込み
     df = load_data(sheet)
     
     if len(df) == 0:
-        st.info("参加者がいません。サイドバーから追加してください。")
+        st.info("👥 参加者がいません。サイドバーから追加してください。")
         return
     
-    # 出席状況の統計表示
-    col1, col2, col3 = st.columns(3)
+    # ソート処理
+    if sort_option == "No順":
+        df = df.sort_values("No")
+    elif sort_option == "名前順（あいうえお）":
+        df = df.sort_values("名前")
+    elif sort_option == "1次会出席者優先":
+        df = df.sort_values(["1次会", "No"], ascending=[False, True])
+    elif sort_option == "2次会出席者優先":
+        df = df.sort_values(["2次会", "No"], ascending=[False, True])
+    
+    df = df.reset_index(drop=True)
+    
+    # 統計情報
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("総参加者数", len(df))
+        st.metric("👥 総参加者数", len(df))
     with col2:
-        attended = df["出席"].sum()
-        st.metric("出席者数", attended)
+        first_attended = df["1次会"].sum()
+        st.metric("🍻 1次会出席", f"{first_attended}名")
     with col3:
-        attendance_rate = (attended / len(df) * 100) if len(df) > 0 else 0
-        st.metric("出席率", f"{attendance_rate:.1f}%")
+        second_attended = df["2次会"].sum()
+        st.metric("🎉 2次会出席", f"{second_attended}名")
+    with col4:
+        both_attended = ((df["1次会"]) & (df["2次会"])).sum()
+        st.metric("⭐ 両方出席", f"{both_attended}名")
+    
+    st.markdown("---")
+    
+    # テーブルヘッダー
+    header_cols = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
+    headers = ["No", "名前", "1次会", "2次会", "コメント", "削除"]
+    for col, header in zip(header_cols, headers):
+        with col:
+            st.markdown(f"**{header}**")
     
     st.markdown("---")
     
@@ -154,51 +250,60 @@ def main():
     
     for idx, row in df.iterrows():
         with st.container():
-            col1, col2, col3, col4 = st.columns([0.5, 2, 5, 0.5])
+            st.markdown('<div class="attendee-card">', unsafe_allow_html=True)
+            
+            col1, col2, col3, col4, col5, col6 = st.columns([0.8, 2.5, 1.2, 1.2, 3, 0.8])
             
             with col1:
-                st.write(f"**{row['ID']}**")
+                st.markdown(f"<div style='padding-top:8px;'><strong>{row['No']}</strong></div>", unsafe_allow_html=True)
             
             with col2:
-                st.write(f"**{row['名前']}**")
+                st.markdown(f"<div style='padding-top:8px;'><strong>{row['名前']}</strong></div>", unsafe_allow_html=True)
             
             with col3:
-                # チェックボックスとコメントを横並びに
-                subcol1, subcol2 = st.columns([1, 4])
-                
-                with subcol1:
-                    attended = st.checkbox(
-                        "出席",
-                        value=row["出席"],
-                        key=f"attend_{row['ID']}"
-                    )
-                
-                with subcol2:
-                    comment = st.text_input(
-                        "コメント",
-                        value=row["コメント"],
-                        key=f"comment_{row['ID']}",
-                        label_visibility="collapsed",
-                        placeholder="コメントを入力..."
-                    )
-                
-                # 変更があったか確認
-                if attended != row["出席"] or comment != row["コメント"]:
-                    df.at[idx, "出席"] = attended
-                    df.at[idx, "コメント"] = comment
-                    df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    changes_made = True
+                first_party = st.checkbox(
+                    "1次会",
+                    value=row["1次会"],
+                    key=f"first_{row['No']}",
+                    label_visibility="collapsed"
+                )
             
             with col4:
-                # 削除ボタン
-                if st.button("🗑️", key=f"delete_{row['ID']}", help="削除"):
-                    df = df[df["ID"] != row["ID"]]
+                second_party = st.checkbox(
+                    "2次会",
+                    value=row["2次会"],
+                    key=f"second_{row['No']}",
+                    label_visibility="collapsed"
+                )
+            
+            with col5:
+                comment = st.text_input(
+                    "コメント",
+                    value=row["コメント"],
+                    key=f"comment_{row['No']}",
+                    label_visibility="collapsed",
+                    placeholder="コメントを入力..."
+                )
+            
+            with col6:
+                if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
+                    df = df[df["No"] != row["No"]]
                     if save_data(sheet, df):
-                        st.success("削除しました")
+                        st.success("✅ 削除しました")
                         time.sleep(1)
                         st.rerun()
             
-            st.divider()
+            # 変更があったか確認
+            if (first_party != row["1次会"] or 
+                second_party != row["2次会"] or 
+                comment != row["コメント"]):
+                df.at[idx, "1次会"] = first_party
+                df.at[idx, "2次会"] = second_party
+                df.at[idx, "コメント"] = comment
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
+            
+            st.markdown('</div>', unsafe_allow_html=True)
     
     # 変更を保存
     if changes_made:
