@@ -850,38 +850,33 @@ def main():
         flex: 0 0 8% !important;
         max-width: 8% !important;
         text-align: center;
-        padding: 0 0.2rem;
         font-size: 0.9rem;
     }
     
     .att-cell-name {
-        flex: 0 0 30% !important;
-        max-width: 30% !important;
+        flex: 0 0 28% !important;
+        max-width: 28% !important;
         text-align: left;
-        padding: 0 0.5rem;
         font-weight: bold;
         font-size: 0.9rem;
     }
     
     .att-cell-first {
-        flex: 0 0 26% !important;
-        max-width: 26% !important;
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
         text-align: center;
-        padding: 0 0.2rem;
     }
     
     .att-cell-second {
-        flex: 0 0 26% !important;
-        max-width: 26% !important;
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
         text-align: center;
-        padding: 0 0.2rem;
     }
     
     .att-cell-delete {
-        flex: 0 0 10% !important;
-        max-width: 10% !important;
+        flex: 0 0 9% !important;
+        max-width: 9% !important;
         text-align: center;
-        padding: 0 0.2rem;
     }
     
     /* ボタンコンテナもFlexboxに */
