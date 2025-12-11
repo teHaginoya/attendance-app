@@ -167,6 +167,11 @@ st.markdown("""
     .attendance-row-container .stButton button {
         width: 50% !important;
     }
+
+    /* 削除ボタン（5番目のカラム）だけ100%幅 */
+    .attendance-row-container [data-testid="column"]:nth-child(5) .stButton button {
+        width: 100% !important;
+    }
     
     /* 出席ボタン（Secondary）のスタイル */
     button[kind="secondary"] {
