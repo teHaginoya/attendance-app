@@ -34,6 +34,7 @@ st.markdown("""
     
     /* 削除確認ダイアログ用のカラム設定（st.columnsを使用） */
     [data-testid="column"] {
+        margin:0;
     }
     
     /* データ行用のカラムは幅を固定 */
