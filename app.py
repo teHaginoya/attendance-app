@@ -652,6 +652,24 @@ def main():
     # タイトル
     st.markdown('<div class="header-style"><h1>📝 出席簿アプリ</h1><p>参加者の出席状況を管理</p></div>', unsafe_allow_html=True)
     
+    # ダイアログ関数の定義
+    @st.dialog("出欠を選択してください")
+    def select_attendance(meeting_type, person_no, person_name):
+        st.markdown(f"### {person_name}さんの{meeting_type}出欠")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("✓ 出席", key=f"dialog_attend_{meeting_type}_{person_no}", type="primary", use_container_width=True):
+                return "出席"
+        with col2:
+            if st.button("✗ 欠席", key=f"dialog_absent_{meeting_type}_{person_no}", use_container_width=True):
+                return "欠席"
+        
+        if st.button("キャンセル", key=f"dialog_cancel_{meeting_type}_{person_no}", use_container_width=True):
+            st.rerun()
+        
+        return None
+    
     # Google Sheetsクライアント取得
     client = get_google_sheets_client()
     if not client:
@@ -786,11 +804,6 @@ def main():
         
         # 1次会ボタン
         with cols[2]:
-            # 選択キーを定義
-            select_key = f"select_first_{row['No']}"
-            if select_key not in st.session_state:
-                st.session_state[select_key] = False
-            
             # 現在の状態に応じてボタンの表示を変更
             if row["1次会"] == "出席":
                 button_label = "✓ 出席"
@@ -810,47 +823,17 @@ def main():
                 st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
-                st.session_state[select_key] = True
+                result = select_attendance("1次会", row['No'], row['名前'])
+                if result:
+                    df.at[idx, "1次会"] = result
+                    df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    changes_made = True
             
             if button_class:
-                st.markdown('</div>', unsafe_allow_html=True)
-            
-            # 選択ポップアップ
-            if st.session_state[select_key]:
-                st.markdown('<div class="selection-popup">', unsafe_allow_html=True)
-                st.markdown('<h4>📋 1次会の出欠を選択</h4>', unsafe_allow_html=True)
-                col_attend, col_absent, col_cancel = st.columns(3)
-                with col_attend:
-                    st.markdown('<div class="popup-attend">', unsafe_allow_html=True)
-                    if st.button("✓ 出席", key=f"attend_first_{row['No']}", type="primary"):
-                        df.at[idx, "1次会"] = "出席"
-                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        st.session_state[select_key] = False
-                        changes_made = True
-                    st.markdown('</div>', unsafe_allow_html=True)
-                with col_absent:
-                    st.markdown('<div class="popup-absent">', unsafe_allow_html=True)
-                    if st.button("✗ 欠席", key=f"absent_first_{row['No']}"):
-                        df.at[idx, "1次会"] = "欠席"
-                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        st.session_state[select_key] = False
-                        changes_made = True
-                    st.markdown('</div>', unsafe_allow_html=True)
-                with col_cancel:
-                    st.markdown('<div class="popup-cancel">', unsafe_allow_html=True)
-                    if st.button("キャンセル", key=f"cancel_first_{row['No']}"):
-                        st.session_state[select_key] = False
-                        st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         
         # 2次会ボタン
         with cols[3]:
-            # 選択キーを定義
-            select_key = f"select_second_{row['No']}"
-            if select_key not in st.session_state:
-                st.session_state[select_key] = False
-            
             # 現在の状態に応じてボタンの表示を変更
             if row["2次会"] == "出席":
                 button_label = "✓ 出席"
@@ -870,38 +853,13 @@ def main():
                 st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
-                st.session_state[select_key] = True
+                result = select_attendance("2次会", row['No'], row['名前'])
+                if result:
+                    df.at[idx, "2次会"] = result
+                    df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    changes_made = True
             
             if button_class:
-                st.markdown('</div>', unsafe_allow_html=True)
-            
-            # 選択ポップアップ
-            if st.session_state[select_key]:
-                st.markdown('<div class="selection-popup">', unsafe_allow_html=True)
-                st.markdown('<h4>🎉 2次会の出欠を選択</h4>', unsafe_allow_html=True)
-                col_attend, col_absent, col_cancel = st.columns(3)
-                with col_attend:
-                    st.markdown('<div class="popup-attend">', unsafe_allow_html=True)
-                    if st.button("✓ 出席", key=f"attend_second_{row['No']}", type="primary"):
-                        df.at[idx, "2次会"] = "出席"
-                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        st.session_state[select_key] = False
-                        changes_made = True
-                    st.markdown('</div>', unsafe_allow_html=True)
-                with col_absent:
-                    st.markdown('<div class="popup-absent">', unsafe_allow_html=True)
-                    if st.button("✗ 欠席", key=f"absent_second_{row['No']}"):
-                        df.at[idx, "2次会"] = "欠席"
-                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        st.session_state[select_key] = False
-                        changes_made = True
-                    st.markdown('</div>', unsafe_allow_html=True)
-                with col_cancel:
-                    st.markdown('<div class="popup-cancel">', unsafe_allow_html=True)
-                    if st.button("キャンセル", key=f"cancel_second_{row['No']}"):
-                        st.session_state[select_key] = False
-                        st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         
         # 削除ボタン
