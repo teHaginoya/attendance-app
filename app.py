@@ -29,7 +29,7 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     .element-container {
-        # margin-bottom: 0.2rem;
+        margin-bottom: 0.2rem;
     }
     
     /* stLayoutWrapperの幅を93%に設定 */
@@ -110,10 +110,10 @@ st.markdown("""
     
     /* 各カラム内のコンテンツも中央揃え */
     .attendance-row-container [data-testid="column"] > div {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     /* 入力フィールドのサイズを小さく */
@@ -202,6 +202,20 @@ st.markdown("""
         background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%) !important;
     }
     
+    /* 欠席ボタンのスタイル */
+    .absent-button button {
+        background: linear-gradient(135deg, #f44336 0%, #e91e63 100%) !important;
+        color: white !important;
+        border: none !important;
+        box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3) !important;
+    }
+    
+    .absent-button button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.4) !important;
+        background: linear-gradient(135deg, #ef5350 0%, #ec407a 100%) !important;
+    }
+    
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
@@ -211,11 +225,11 @@ st.markdown("""
     }
     
     div[data-testid="metric-container"] label {
-        font-size: 0.85rem;
+        font-size: 0.7rem;
     }
     
     div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-        font-size: 0.5rem;
+        font-size: 0.95rem;
     }
     
     /* ヘッダーのスタイル */
@@ -378,11 +392,10 @@ st.markdown("""
         }
         
         /* メトリクスカードを2列に */
-        div[data-testid="stHorizontalBlock"] {
+        div[data-testid="stHorizontalBlock"]:not(.attendance-row-container [data-testid="stHorizontalBlock"]) {
             width:86%;
+            display: grid !important;
             grid-template-columns: 1fr 1fr !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
             gap: 0.3rem !important;
         }
         
@@ -392,31 +405,31 @@ st.markdown("""
         }
         
         div[data-testid="metric-container"] label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
         }
         
         /* ボタンのフォントサイズを調整 */
         .stButton button {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.3rem;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.25rem;
         }
         
-        /* テーブルヘッダーのフォントサイズ */
-        .table-header {
-            font-size: 0.75rem;
-            padding: 0.4rem;
+        /* データ行のフォントサイズを調整 */
+        .attendance-row-container [data-testid="column"] div {
+            font-size: 0.7rem !important;
         }
+        
         /* テーブルヘッダーのフォントサイズ */
         .attendance-header .att-cell-no,
         .attendance-header .att-cell-name,
         .attendance-header .att-cell-first,
         .attendance-header .att-cell-second,
         .attendance-header .att-cell-delete {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
         }
     }
     
@@ -433,31 +446,64 @@ st.markdown("""
         
         /* メトリクスの値をさらに小さく */
         div[data-testid="metric-container"] label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         
         /* ボタンのフォントサイズをさらに調整 */
         .stButton button {
-            font-size: 0.6rem;
-            padding: 0.15rem 0.25rem;
+            font-size: 0.55rem;
+            padding: 0.1rem 0.2rem;
         }
         
-        /* テーブルヘッダーのフォントサイズ */
-        .table-header {
-            font-size: 0.7rem;
-            padding: 0.3rem;
+        /* データ行のフォントサイズをさらに調整 */
+        .attendance-row-container [data-testid="column"] div {
+            font-size: 0.65rem !important;
         }
+        
         /* テーブルヘッダーのフォントサイズ */
         .attendance-header .att-cell-no,
         .attendance-header .att-cell-name,
         .attendance-header .att-cell-first,
         .attendance-header .att-cell-second,
         .attendance-header .att-cell-delete {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
+        }
+    }
+    
+    /* 640px以下でもデータ行のレイアウトを維持 */
+    @media (max-width: 640px) {
+        /* データ行のレイアウトを強制的に維持 */
+        .attendance-row-container [data-testid="stHorizontalBlock"] {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0 !important;
+        }
+        
+        .attendance-row-container [data-testid="column"] {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        /* カラム内のコンテンツも中央揃え */
+        .attendance-row-container [data-testid="column"] > div {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+        
+        /* メトリクスカードのみグリッド表示を維持 */
+        div[data-testid="stHorizontalBlock"]:not(.attendance-row-container [data-testid="stHorizontalBlock"]) {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
         }
     }
     </style>
@@ -503,22 +549,21 @@ def load_data(sheet):
         if "出席" in df.columns and "1次会" not in df.columns:
             # 出席列を1次会に変換、2次会は新規作成
             df = df.rename(columns={"出席": "1次会"})
-            df["2次会"] = False
+            df["2次会"] = ""
         
         # 必須カラムの確認と追加
         required_columns = ["No", "名前", "1次会", "2次会", "コメント", "更新日時"]
         for col in required_columns:
             if col not in df.columns:
-                if col in ["1次会", "2次会"]:
-                    df[col] = False
-                else:
-                    df[col] = ""
+                df[col] = ""
         
-        # 出席列をブール型に変換
+        # 出席列を文字列型に変換（"出席"、"欠席"、""のいずれか）
         if "1次会" in df.columns:
-            df["1次会"] = df["1次会"].astype(str).str.upper() == "TRUE"
+            df["1次会"] = df["1次会"].astype(str)
+            df["1次会"] = df["1次会"].replace({"TRUE": "出席", "FALSE": "", "nan": ""})
         if "2次会" in df.columns:
-            df["2次会"] = df["2次会"].astype(str).str.upper() == "TRUE"
+            df["2次会"] = df["2次会"].astype(str)
+            df["2次会"] = df["2次会"].replace({"TRUE": "出席", "FALSE": "", "nan": ""})
         
         # カラムの順序を統一
         df = df[required_columns]
@@ -531,10 +576,8 @@ def load_data(sheet):
 def save_data(sheet, df):
     """DataFrameをスプレッドシートに保存"""
     try:
-        # 出席列をTRUE/FALSEの文字列に変換
+        # 出席列はそのまま保存（"出席"、"欠席"、""のいずれか）
         df_copy = df.copy()
-        df_copy["1次会"] = df_copy["1次会"].apply(lambda x: "TRUE" if x else "FALSE")
-        df_copy["2次会"] = df_copy["2次会"].apply(lambda x: "TRUE" if x else "FALSE")
         
         # ヘッダーとデータを結合
         data_to_save = [df_copy.columns.tolist()] + df_copy.values.tolist()
@@ -583,8 +626,8 @@ def main():
                 new_row = pd.DataFrame([{
                     "No": new_no,
                     "名前": new_name,
-                    "1次会": False,
-                    "2次会": False,
+                    "1次会": "",
+                    "2次会": "",
                     "コメント": "",
                     "更新日時": ""
                 }])
@@ -643,13 +686,13 @@ def main():
     with col1:
         st.metric("👥 総参加者数", len(df))
     with col2:
-        first_attended = df["1次会"].sum()
+        first_attended = (df["1次会"] == "出席").sum()
         st.metric("🍻 1次会出席", f"{first_attended}名")
     with col3:
-        second_attended = df["2次会"].sum()
+        second_attended = (df["2次会"] == "出席").sum()
         st.metric("🎉 2次会出席", f"{second_attended}名")
     with col4:
-        both_attended = ((df["1次会"]) & (df["2次会"])).sum()
+        both_attended = ((df["1次会"] == "出席") & (df["2次会"] == "出席")).sum()
         st.metric("⭐ 両方出席", f"{both_attended}名")
     
     st.markdown("---")
@@ -685,31 +728,107 @@ def main():
         
         # 1次会ボタン
         with cols[2]:
-            if row["1次会"]:
+            # 選択キーを定義
+            select_key = f"select_first_{row['No']}"
+            if select_key not in st.session_state:
+                st.session_state[select_key] = False
+            
+            # 現在の状態に応じてボタンの表示を変更
+            if row["1次会"] == "出席":
                 button_label = "✓ 出席"
                 button_type = "primary"
-            else:
-                button_label = "出席"
+                button_class = ""
+            elif row["1次会"] == "欠席":
+                button_label = "✗ 欠席"
                 button_type = "secondary"
+                button_class = "absent-button"
+            else:
+                button_label = "未選択"
+                button_type = "secondary"
+                button_class = ""
+            
+            # ボタンのHTMLクラスを適用
+            if button_class:
+                st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
-                df.at[idx, "1次会"] = not row["1次会"]
-                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                changes_made = True
+                st.session_state[select_key] = True
+            
+            if button_class:
+                st.markdown('</div>', unsafe_allow_html=True)
+            
+            # 選択ポップアップ
+            if st.session_state[select_key]:
+                st.markdown("**1次会の出欠を選択:**")
+                col_attend, col_absent, col_cancel = st.columns(3)
+                with col_attend:
+                    if st.button("✓ 出席", key=f"attend_first_{row['No']}", type="primary"):
+                        df.at[idx, "1次会"] = "出席"
+                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        st.session_state[select_key] = False
+                        changes_made = True
+                with col_absent:
+                    if st.button("✗ 欠席", key=f"absent_first_{row['No']}"):
+                        df.at[idx, "1次会"] = "欠席"
+                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        st.session_state[select_key] = False
+                        changes_made = True
+                with col_cancel:
+                    if st.button("キャンセル", key=f"cancel_first_{row['No']}"):
+                        st.session_state[select_key] = False
+                        st.rerun()
         
         # 2次会ボタン
         with cols[3]:
-            if row["2次会"]:
+            # 選択キーを定義
+            select_key = f"select_second_{row['No']}"
+            if select_key not in st.session_state:
+                st.session_state[select_key] = False
+            
+            # 現在の状態に応じてボタンの表示を変更
+            if row["2次会"] == "出席":
                 button_label = "✓ 出席"
                 button_type = "primary"
-            else:
-                button_label = "出席"
+                button_class = ""
+            elif row["2次会"] == "欠席":
+                button_label = "✗ 欠席"
                 button_type = "secondary"
+                button_class = "absent-button"
+            else:
+                button_label = "未選択"
+                button_type = "secondary"
+                button_class = ""
+            
+            # ボタンのHTMLクラスを適用
+            if button_class:
+                st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
-                df.at[idx, "2次会"] = not row["2次会"]
-                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                changes_made = True
+                st.session_state[select_key] = True
+            
+            if button_class:
+                st.markdown('</div>', unsafe_allow_html=True)
+            
+            # 選択ポップアップ
+            if st.session_state[select_key]:
+                st.markdown("**2次会の出欠を選択:**")
+                col_attend, col_absent, col_cancel = st.columns(3)
+                with col_attend:
+                    if st.button("✓ 出席", key=f"attend_second_{row['No']}", type="primary"):
+                        df.at[idx, "2次会"] = "出席"
+                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        st.session_state[select_key] = False
+                        changes_made = True
+                with col_absent:
+                    if st.button("✗ 欠席", key=f"absent_second_{row['No']}"):
+                        df.at[idx, "2次会"] = "欠席"
+                        df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        st.session_state[select_key] = False
+                        changes_made = True
+                with col_cancel:
+                    if st.button("キャンセル", key=f"cancel_second_{row['No']}"):
+                        st.session_state[select_key] = False
+                        st.rerun()
         
         # 削除ボタン
         with cols[4]:
