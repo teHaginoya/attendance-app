@@ -32,9 +32,20 @@ st.markdown("""
         margin-bottom: 0.2rem;
     }
     
-    /* カラム間のギャップを削減 */
+    /* カラム間のギャップを完全に削除 */
     [data-testid="column"] {
-        padding: 0.1rem !important;
+        padding: 0 !important;
+    }
+    
+    /* カラムコンテナのギャップも削除 */
+    [data-testid="stHorizontalBlock"] > div {
+        gap: 0 !important;
+    }
+    
+    /* カラム要素の余白を削除 */
+    div[data-testid="column"] > div {
+        padding: 0 !important;
+        margin: 0 !important;
     }
     
     /* 入力フィールドのサイズを小さく */
@@ -531,8 +542,8 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
-        # Streamlitのカラム機能を使って横並びに配置
-        cols = st.columns([0.8, 2.5, 2.5, 2.5, 1])
+        # Streamlitのカラム機能を使って横並びに配置（ヘッダーと同じ比率: 8%, 25%, 25%, 25%, 10%）
+        cols = st.columns([8, 25, 25, 25, 10])
         
         # No
         with cols[0]:
@@ -596,8 +607,9 @@ def main():
                     st.session_state[confirm_key] = False
                     st.rerun()
         
-        # 各行の下に薄い線を追加
-        st.markdown('<hr style="margin: 0.3rem 0; border: none; border-top: 1px solid #eee;">', unsafe_allow_html=True)
+        # 各行の下に薄い線を追加（削除確認中は表示しない）
+        if not st.session_state[confirm_key]:
+            st.markdown('<hr style="margin: 0.3rem 0; border: none; border-top: 1px solid #eee;">', unsafe_allow_html=True)
     
     # 変更を保存
     if changes_made:
