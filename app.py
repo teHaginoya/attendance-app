@@ -147,7 +147,7 @@ st.markdown("""
         border-radius: 5px;
         transition: all 0.3s ease;
         margin-bottom: 0;
-        width: 75%;
+        width: 100%;
     }
     
     .stButton {
@@ -164,11 +164,13 @@ st.markdown("""
         align-items: center !important;
     }
     
-    .attendance-row-container .stButton button {
+    /* 1次会・2次会ボタン（3番目と4番目のカラム）は50%幅 */
+    .attendance-row-container [data-testid="column"]:nth-child(3) .stButton button,
+    .attendance-row-container [data-testid="column"]:nth-child(4) .stButton button {
         width: 50% !important;
     }
-
-    /* 削除ボタン（5番目のカラム）だけ100%幅 */
+    
+    /* 削除ボタン（5番目のカラム）は100%幅 */
     .attendance-row-container [data-testid="column"]:nth-child(5) .stButton button {
         width: 100% !important;
     }
@@ -267,6 +269,7 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
+        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
@@ -342,7 +345,7 @@ st.markdown("""
     .att-cell-first button,
     .att-cell-second button,
     .att-cell-delete button {
-        width: 75% !important;
+        width: 100% !important;
     }
     
     /* 行の区切り線 */
