@@ -380,7 +380,6 @@ st.markdown("""
         /* メトリクスカードを2列に */
         div[data-testid="stHorizontalBlock"] {
             width:86%;
-            display: grid !important;
             grid-template-columns: 1fr 1fr !important;
             gap: 0.3rem !important;
         }
