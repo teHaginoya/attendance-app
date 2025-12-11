@@ -29,7 +29,7 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     .element-container {
-        # margin-bottom: 0.2rem;
+        margin-bottom: 0.2rem;
     }
     
     /* stLayoutWrapperの幅を93%に設定 */
@@ -211,7 +211,7 @@ st.markdown("""
     }
     
     div[data-testid="metric-container"] label {
-        font-size: 0.85rem;
+        font-size: 0.7rem;
     }
     
     div[data-testid="metric-container"] [data-testid="stMetricValue"] {
@@ -378,7 +378,7 @@ st.markdown("""
         }
         
         /* メトリクスカードを2列に */
-        div[data-testid="stHorizontalBlock"] {
+        div[data-testid="stHorizontalBlock"]:not(.attendance-row-container [data-testid="stHorizontalBlock"]) {
             width:86%;
             display: grid !important;
             grid-template-columns: 1fr 1fr !important;
@@ -391,31 +391,31 @@ st.markdown("""
         }
         
         div[data-testid="metric-container"] label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
         }
         
         /* ボタンのフォントサイズを調整 */
         .stButton button {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.3rem;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.25rem;
         }
         
-        /* テーブルヘッダーのフォントサイズ */
-        .table-header {
-            font-size: 0.75rem;
-            padding: 0.4rem;
+        /* データ行のフォントサイズを調整 */
+        .attendance-row-container [data-testid="column"] div {
+            font-size: 0.7rem !important;
         }
+        
         /* テーブルヘッダーのフォントサイズ */
         .attendance-header .att-cell-no,
         .attendance-header .att-cell-name,
         .attendance-header .att-cell-first,
         .attendance-header .att-cell-second,
         .attendance-header .att-cell-delete {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
         }
     }
     
@@ -432,31 +432,31 @@ st.markdown("""
         
         /* メトリクスの値をさらに小さく */
         div[data-testid="metric-container"] label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
         }
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         
         /* ボタンのフォントサイズをさらに調整 */
         .stButton button {
-            font-size: 0.6rem;
-            padding: 0.15rem 0.25rem;
+            font-size: 0.55rem;
+            padding: 0.1rem 0.2rem;
         }
         
-        /* テーブルヘッダーのフォントサイズ */
-        .table-header {
-            font-size: 0.7rem;
-            padding: 0.3rem;
+        /* データ行のフォントサイズをさらに調整 */
+        .attendance-row-container [data-testid="column"] div {
+            font-size: 0.65rem !important;
         }
+        
         /* テーブルヘッダーのフォントサイズ */
         .attendance-header .att-cell-no,
         .attendance-header .att-cell-name,
         .attendance-header .att-cell-first,
         .attendance-header .att-cell-second,
         .attendance-header .att-cell-delete {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
     }
     </style>
