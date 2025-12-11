@@ -192,7 +192,7 @@ st.markdown("""
     }
     
     div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-        font-size: 1.2rem;
+        font-size: 0.5rem;
     }
     
     /* ヘッダーのスタイル */
