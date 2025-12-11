@@ -654,21 +654,27 @@ def main():
     
     # ダイアログ関数の定義
     @st.dialog("出欠を選択してください")
-    def select_attendance(meeting_type, person_no, person_name):
+    def select_attendance(meeting_type, person_no, person_name, idx, df):
         st.markdown(f"### {person_name}さんの{meeting_type}出欠")
         
         col1, col2 = st.columns(2)
         with col1:
             if st.button("✓ 出席", key=f"dialog_attend_{meeting_type}_{person_no}", type="primary", use_container_width=True):
-                return "出席"
+                df.at[idx, meeting_type] = "出席"
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                st.session_state['attendance_changed'] = True
+                st.session_state['updated_df'] = df
+                st.rerun()
         with col2:
             if st.button("✗ 欠席", key=f"dialog_absent_{meeting_type}_{person_no}", use_container_width=True):
-                return "欠席"
+                df.at[idx, meeting_type] = "欠席"
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                st.session_state['attendance_changed'] = True
+                st.session_state['updated_df'] = df
+                st.rerun()
         
         if st.button("キャンセル", key=f"dialog_cancel_{meeting_type}_{person_no}", use_container_width=True):
             st.rerun()
-        
-        return None
     
     # Google Sheetsクライアント取得
     client = get_google_sheets_client()
@@ -737,6 +743,21 @@ def main():
     # データ読み込み
     df = load_data(sheet)
     
+    # session_stateの初期化
+    if 'attendance_changed' not in st.session_state:
+        st.session_state['attendance_changed'] = False
+    if 'updated_df' not in st.session_state:
+        st.session_state['updated_df'] = None
+    
+    # 変更があった場合はデータを保存
+    if st.session_state['attendance_changed'] and st.session_state['updated_df'] is not None:
+        if save_data(sheet, st.session_state['updated_df']):
+            st.success("✅ 変更を保存しました")
+            time.sleep(0.5)
+            st.session_state['attendance_changed'] = False
+            st.session_state['updated_df'] = None
+            st.rerun()
+    
     if len(df) == 0:
         st.info("👥 参加者がいません。サイドバーから追加してください。")
         return
@@ -785,8 +806,6 @@ def main():
     """, unsafe_allow_html=True)
     
     # 出席簿フォーム
-    changes_made = False
-    
     for idx, row in df.iterrows():
         # データ行コンテナの開始
         st.markdown('<div class="attendance-row-container">', unsafe_allow_html=True)
@@ -823,11 +842,7 @@ def main():
                 st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
-                result = select_attendance("1次会", row['No'], row['名前'])
-                if result:
-                    df.at[idx, "1次会"] = result
-                    df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    changes_made = True
+                select_attendance("1次会", row['No'], row['名前'], idx, df)
             
             if button_class:
                 st.markdown('</div>', unsafe_allow_html=True)
@@ -853,11 +868,7 @@ def main():
                 st.markdown(f'<div class="{button_class}">', unsafe_allow_html=True)
             
             if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
-                result = select_attendance("2次会", row['No'], row['名前'])
-                if result:
-                    df.at[idx, "2次会"] = result
-                    df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    changes_made = True
+                select_attendance("2次会", row['No'], row['名前'], idx, df)
             
             if button_class:
                 st.markdown('</div>', unsafe_allow_html=True)
@@ -894,13 +905,6 @@ def main():
         # 各行の下に薄い線を追加（削除確認中は表示しない）
         if not st.session_state[confirm_key]:
             st.markdown('<hr style="margin: 0.3rem 0; border: none; border-top: 1px solid #eee;">', unsafe_allow_html=True)
-    
-    # 変更を保存
-    if changes_made:
-        if save_data(sheet, df):
-            st.success("✅ 変更を保存しました")
-            time.sleep(0.5)
-            st.rerun()
 
 if __name__ == "__main__":
     main()
