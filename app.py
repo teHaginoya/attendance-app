@@ -147,18 +147,25 @@ st.markdown("""
         border-radius: 5px;
         transition: all 0.3s ease;
         margin-bottom: 0;
-        # width: 100%;
+        width: 100%;
     }
     
     .stButton {
         margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
-    /* データ行の出席ボタンは横幅50% */
+    /* データ行の出席ボタンは横幅50%で中央揃い */
+    .attendance-row-container .stButton {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
     .attendance-row-container .stButton button {
         width: 50% !important;
-        margin-left: auto;
-        margin-right: auto;
     }
     
     /* 出席ボタン（Secondary）のスタイル */
