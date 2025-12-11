@@ -379,7 +379,6 @@ st.markdown("""
         
         /* メトリクスカードを2列に */
         div[data-testid="stHorizontalBlock"] {
-            width:86%;
             display: grid !important;
             grid-template-columns: 1fr 1fr !important;
             gap: 0.3rem !important;
@@ -416,6 +415,31 @@ st.markdown("""
         .attendance-header .att-cell-second,
         .attendance-header .att-cell-delete {
             font-size: 0.75rem;
+        }
+    }
+
+    /* 640px以下でもデータ行のレイアウトを維持 */
+    @media (max-width: 640px) {
+        /* データ行のレイアウトを強制的に維持 */
+        .attendance-row-container [data-testid="stHorizontalBlock"] {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0 !important;
+        }
+        
+        .attendance-row-container [data-testid="column"] {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        /* メトリクスカードのみグリッド表示を維持 */
+        div[data-testid="stHorizontalBlock"]:not(.attendance-row-container [data-testid="stHorizontalBlock"]) {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
         }
     }
     
