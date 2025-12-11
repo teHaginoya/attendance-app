@@ -154,6 +154,13 @@ st.markdown("""
         margin-bottom: 0;
     }
     
+    /* データ行の出席ボタンは横幅50% */
+    .attendance-row-container .stButton button {
+        width: 50% !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
     /* 出席ボタン（Secondary）のスタイル */
     button[kind="secondary"] {
         background-color: #f0f0f0 !important;
@@ -248,6 +255,7 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
+        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
