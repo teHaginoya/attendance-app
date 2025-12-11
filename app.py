@@ -33,11 +33,11 @@ st.markdown("""
     }
     
     /* 削除確認ダイアログ用のカラム設定（st.columnsを使用） */
-    [data-testid="stLayoutWrapper"] {
-        max-width: 93% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
+    # [data-testid="stLayoutWrapper"] {
+    #     max-width: 93% !important;
+    #     margin-left: auto !important;
+    #     margin-right: auto !important;
+    # }
 
     [data-testid="column"] {
     }
