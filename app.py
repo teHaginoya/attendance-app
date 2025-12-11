@@ -32,13 +32,14 @@ st.markdown("""
         margin-bottom: 0.2rem;
     }
     
+    /* stLayoutWrapperの幅を93%に設定 */
+    [data-testid="stLayoutWrapper"] {
+        max-width: 93% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
     /* 削除確認ダイアログ用のカラム設定（st.columnsを使用） */
-    # [data-testid="stLayoutWrapper"] {
-    #     max-width: 93% !important;
-    #     margin-left: auto !important;
-    #     margin-right: auto !important;
-    # }
-
     [data-testid="column"] {
     }
     
@@ -91,7 +92,8 @@ st.markdown("""
         align-items: center !important;
         justify-content: center !important;
         gap: 0 !important;
-        max-width: 93% !important;
+        max-width: 100% !important;
+        width: 100% !important;
         margin-left: auto !important;
         margin-right: auto !important;
         margin-top: 0 !important;
@@ -192,7 +194,7 @@ st.markdown("""
     }
     
     div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-        font-size: 0.5rem;
+        font-size: 1.2rem;
     }
     
     /* ヘッダーのスタイル */
@@ -238,6 +240,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         width: 100%;
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
         font-weight: bold;
@@ -245,7 +248,6 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
-        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
@@ -254,7 +256,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         width: 100%;
-        max-width: 93%;
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
