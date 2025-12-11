@@ -209,7 +209,6 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         width: 100%;
-        max-width: 93%;
         margin-left: auto;
         margin-right: auto;
         font-weight: bold;
