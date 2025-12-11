@@ -72,12 +72,40 @@ st.markdown("""
         width: 10% !important;
     }
     
-    /* データ行コンテナのスタイル */
+    /* データ行コンテナのスタイル - ヘッダーと同じ見栄えに */
+    .attendance-row-container {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
     .attendance-row-container [data-testid="stHorizontalBlock"] {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         gap: 0 !important;
+        max-width: 93% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
     
     .attendance-row-container [data-testid="column"] {
+        padding: 0 0.2rem !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* 各カラム内のコンテンツも中央揃え */
+    .attendance-row-container [data-testid="column"] > div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     /* 入力フィールドのサイズを小さく */
@@ -204,6 +232,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         width: 100%;
+        max-width: 93%;
         margin-left: auto;
         margin-right: auto;
         font-weight: bold;
@@ -211,6 +240,7 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
+        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
