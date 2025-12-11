@@ -27,79 +27,14 @@ st.markdown("""
         padding-bottom: 1rem;
     }
     
-    /* stMainBlockContainerの上余白を削減 */
-    .stMainBlockContainer {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-    
-    /* st-emotion-cache-zy6yx3の上余白も削減 */
-    .st-emotion-cache-zy6yx3 {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-    
-    /* e4man114クラスの上余白も削減 */
-    .e4man114 {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-    
-    /* block-containerクラス全般の上余白を削減 */
-    .block-container {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-    
     /* コンテナの余白を削減 */
     .element-container {
         margin-bottom: 0.2rem;
     }
     
-    /* stElementContainerの余白を完全に削除 */
-    .stElementContainer {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 0 !important;
-        height: auto !important;
-        max-height: fit-content !important;
-    }
-    
-    /* st-emotion-cache-18kf3utを中央揃えに */
-    .st-emotion-cache-18kf3ut {
-        display: flex !important;
-        align-items: center !important;
-        min-height: 1.8rem !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* ek2vi384クラスも中央揃えに */
-    .ek2vi384 {
-        display: flex !important;
-        align-items: center !important;
-        min-height: 1.8rem !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* すべてのstから始まる要素コンテナの余白を削減 */
-    [class*="stElementContainer"] {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 0 !important;
-        max-height: fit-content !important;
-    }
-    
-    /* Streamlitのキャッシュクラスの余白も削除 */
-    [class*="st-emotion-cache"] {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-    }
-    
-    /* 行間の余白を削減 */
-    .row-widget {
-        margin-bottom: 0.3rem;
+    /* カラム間のギャップを削減 */
+    [data-testid="column"] {
+        padding: 0.1rem !important;
     }
     
     /* 入力フィールドのサイズを小さく */
@@ -128,77 +63,43 @@ st.markdown("""
     
     /* ボタンのサイズを小さく */
     .stButton button {
-        font-size: 0.85rem;
-        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.4rem;
         border-radius: 5px;
         transition: all 0.3s ease;
         margin-bottom: 0;
+        width: 100%;
     }
     
     .stButton {
         margin-bottom: 0;
     }
     
-    /* 出席ボタンのカスタムスタイル */
-    div[data-testid="column"] button[kind="secondary"] {
-        width: 100%;
-        font-size: 0.85rem;
-        padding: 0.3rem 0.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.2s ease;
+    /* 出席ボタン（Secondary）のスタイル */
+    button[kind="secondary"] {
         background-color: #f0f0f0 !important;
         color: #666 !important;
         border: 2px solid #ddd !important;
     }
     
-    div[data-testid="column"] button[kind="secondary"]:hover {
+    button[kind="secondary"]:hover {
         background-color: #e8f5e9 !important;
         border-color: #4caf50 !important;
         color: #2e7d32 !important;
     }
     
-    /* 出席済みボタン（Primary）のスタイル - より強力に */
-    div[data-testid="column"] button[kind="primary"],
-    div[data-testid="column"] button[kind="primary"]:focus,
-    div[data-testid="column"] button[kind="primary"]:active {
-        width: 100%;
+    /* 出席済みボタン（Primary）のスタイル */
+    button[kind="primary"] {
         background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
         color: white !important;
         border: none !important;
-        font-size: 0.85rem;
-        padding: 0.3rem 0.5rem;
-        border-radius: 8px;
-        font-weight: 600;
         box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
-        transition: all 0.2s ease;
-    }
-    
-    div[data-testid="column"] button[kind="primary"]:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4) !important;
-        background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%) !important;
-    }
-    
-    /* Streamlitのデフォルトprimaryボタンスタイルを上書き */
-    button[kind="primary"] {
-        background-color: #4caf50 !important;
-        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
-        border-color: #4caf50 !important;
     }
     
     button[kind="primary"]:hover {
-        background-color: #66bb6a !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4) !important;
         background: linear-gradient(135deg, #66bb6a 0%, #42a5f5 100%) !important;
-        border-color: #66bb6a !important;
-    }
-    
-    button[kind="primary"]:focus,
-    button[kind="primary"]:active {
-        background-color: #4caf50 !important;
-        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
-        border-color: #4caf50 !important;
-        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
     }
     
     /* メトリクスカードのスタイル */
@@ -223,7 +124,7 @@ st.markdown("""
         padding: 0.8rem;
         border-radius: 10px;
         color: white;
-        margin-bottom: 0 !important;
+        margin-bottom: 1rem !important;
     }
     
     .header-style h1 {
@@ -237,39 +138,28 @@ st.markdown("""
         opacity: 0.9;
     }
     
-    /* ヘッダー後の要素を上に詰める */
-    .header-style + div {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    
     /* セレクトボックスのサイズを小さく */
     .stSelectbox select {
         font-size: 0.9rem;
         padding: 0.3rem 0.5rem;
     }
     
-    /* dividerの余白を大幅に減らす */
+    /* テーブルヘッダーのスタイル */
+    .table-header {
+        background-color: #1f77b4;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    /* 行の区切り線 */
     hr {
-        margin-top: 0.1rem;
-        margin-bottom: 0.1rem;
+        margin: 0.3rem 0;
         border: none;
-        border-top: 1px solid #e0e0e0;
-        height: 0;
-        padding: 0;
-    }
-    
-    /* stMarkdownContainerの高さと余白を削減 */
-    .stMarkdownContainer {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 0 !important;
-    }
-    
-    /* カラムの余白を削減 */
-    [data-testid="column"] {
-        padding-top: 0;
-        padding-bottom: 0;
+        border-top: 1px solid #eee;
     }
     
     /* スマホ対応 - レスポンシブデザイン */
@@ -313,6 +203,18 @@ st.markdown("""
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
             font-size: 0.95rem;
         }
+        
+        /* ボタンのフォントサイズを調整 */
+        .stButton button {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.3rem;
+        }
+        
+        /* テーブルヘッダーのフォントサイズ */
+        .table-header {
+            font-size: 0.75rem;
+            padding: 0.4rem;
+        }
     }
     
     /* さらに小さい画面（スマホ縦持ち） */
@@ -333,6 +235,18 @@ st.markdown("""
         
         div[data-testid="metric-container"] [data-testid="stMetricValue"] {
             font-size: 0.8rem;
+        }
+        
+        /* ボタンのフォントサイズをさらに調整 */
+        .stButton button {
+            font-size: 0.6rem;
+            padding: 0.15rem 0.25rem;
+        }
+        
+        /* テーブルヘッダーのフォントサイズ */
+        .table-header {
+            font-size: 0.7rem;
+            padding: 0.3rem;
         }
     }
     </style>
@@ -529,315 +443,70 @@ def main():
     
     st.markdown("---")
     
-    # テーブル形式で表示
-    st.markdown("""
-    <style>
-    .attendance-table-container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .attendance-row {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        width: 100% !important;
-        border-bottom: 1px solid #eee;
-        padding: 0.2rem 0;
-        min-height: 2.5rem;
-        gap: 0;
-    }
-    
-    /* attendance-row内の全ての子要素をflexアイテムに */
-    .attendance-row > * {
-        flex-shrink: 0 !important;
-    }
-    
-    .attendance-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        font-weight: bold;
-        background-color: #1f77b4;
-        color: white;
-        padding: 0.5rem 0;
-        border-radius: 5px;
-    }
-
-    .stElementContainer {
-        margin: 0 !important;
-        padding: 0 !important;
-        padding-right: 0 !important;
-        margin-right: 0 !important;
-        min-height: 0 !important;
-        height: auto !important;
-        max-height: fit-content !important;
-    }
-
-    /* セル内のstElementContainerの右余白も削除 */
-    .att-cell-first .stElementContainer,
-    .att-cell-second .stElementContainer,
-    .att-cell-delete .stElementContainer {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 0 !important;
-        height: auto !important;
-        max-height: fit-content !important;
-    }
-    
-    .att-cell-no {
-        flex: 0 0 8% !important;
-        max-width: 8% !important;
-        text-align: center;
-        font-size: 1rem;
-        padding: 0 0.2rem;
-    }
-    
-    .att-cell-name {
-        flex: 0 0 25% !important;
-        max-width: 25% !important;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1rem;
-        padding: 0 0.5rem;
-    }
-    
-    .att-cell-first {
-        flex: 0 0 25% !important;
-        max-width: 25% !important;
-        text-align: center;
-        font-size: 1rem;
-        padding: 0 0.2rem;
-    }
-    
-    .att-cell-second {
-        flex: 0 0 25% !important;
-        max-width: 25% !important;
-        text-align: center;
-        font-size: 1rem;
-        padding: 0 0.2rem;
-    }
-    
-    .att-cell-delete {
-        flex: 0 0 10% !important;
-        max-width: 10% !important;
-        text-align: center;
-        font-size: 1rem;
-        padding: 0 0.2rem;
-    }
-    
-    /* ヘッダーの各セルの文字サイズを統一 */
-    .attendance-header .att-cell-no,
-    .attendance-header .att-cell-name,
-    .attendance-header .att-cell-first,
-    .attendance-header .att-cell-second,
-    .attendance-header .att-cell-delete {
-        font-size: 1rem;
-    }
-    
-    /* Noと名前のstMarkdownブロックをインライン化 */
-    .attendance-row > .stMarkdown,
-    .attendance-row > div[data-testid="stMarkdown"],
-    .attendance-row > div[data-testid="stMarkdownContainer"] {
-        display: inline-block !important;
-        width: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* attendance-row直下の全てのdivをインライン化 */
-    .attendance-row > div {
-        display: inline-block !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* att-cell-*が含まれるdivはインライン */
-    div[class*="att-cell-"] {
-        display: inline-block !important;
-        vertical-align: middle !important;
-    }
-    
-    /* ボタンコンテナもFlexboxに */
-    .att-btn-container {
-        display: flex !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-    
-    /* 出席ボタン専用のスタイル */
-    .att-cell-first button,
-    .att-cell-second button {
-        font-size: 0.7rem !important;
-        padding: 0.2rem 0.3rem !important;
-        height: 1.8rem !important;
-        min-height: 1.8rem !important;
-        line-height: 1.2 !important;
-        white-space: nowrap !important;
-        width: 100% !important;
-    }
-    
-    /* 削除ボタン専用のスタイル */
-    .att-cell-delete button {
-        font-size: 1rem !important;
-        padding: 0.1rem 0.3rem !important;
-        height: 1.8rem !important;
-        min-height: 1.8rem !important;
-        width: 100% !important;
-    }
-    
-    /* 出席ボタンのPrimary/Secondaryスタイル */
-    .att-cell-first button[kind="primary"],
-    .att-cell-second button[kind="primary"] {
-        background: linear-gradient(135deg, #4caf50 0%, #2196f3 100%) !important;
-        color: white !important;
-        border: none !important;
-        box-shadow: 0 1px 2px rgba(76, 175, 80, 0.3) !important;
-    }
-    
-    .att-cell-first button[kind="secondary"],
-    .att-cell-second button[kind="secondary"] {
-        background-color: #f0f0f0 !important;
-        color: #666 !important;
-        border: 1px solid #ddd !important;
-    }
-    
-    /* Streamlitのデフォルトコンテナを無効化 */
-    .att-cell-first > div,
-    .att-cell-second > div,
-    .att-cell-delete > div {
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.75rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.75rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
-        
-        /* ヘッダーの文字サイズも統一 */
-        .attendance-header .att-cell-no,
-        .attendance-header .att-cell-name,
-        .attendance-header .att-cell-first,
-        .attendance-header .att-cell-second,
-        .attendance-header .att-cell-delete {
-            font-size: 0.75rem;
-        }
-        
-        .att-cell-first button,
-        .att-cell-second button {
-            font-size: 0.65rem !important;
-            padding: 0.15rem 0.2rem !important;
-            height: 1.6rem !important;
-            min-height: 1.6rem !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
-        
-        /* ヘッダーの文字サイズも統一 */
-        .attendance-header .att-cell-no,
-        .attendance-header .att-cell-name,
-        .attendance-header .att-cell-first,
-        .attendance-header .att-cell-second,
-        .attendance-header .att-cell-delete {
-            font-size: 0.7rem;
-        }
-        
-        .att-cell-first button,
-        .att-cell-second button {
-            font-size: 0.6rem !important;
-            padding: 0.1rem 0.15rem !important;
-            height: 1.5rem !important;
-            min-height: 1.5rem !important;
-        }
-        
-        .att-cell-delete button {
-            font-size: 0.9rem !important;
-            height: 1.5rem !important;
-            min-height: 1.5rem !important;
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # ヘッダー行
-    st.markdown("""
-    <div class="attendance-header">
-        <div class="att-cell-no">No</div>
-        <div class="att-cell-name">名前</div>
-        <div class="att-cell-first">1次会</div>
-        <div class="att-cell-second">2次会</div>
-        <div class="att-cell-delete">削除</div>
-    </div>
-    """, unsafe_allow_html=True)
+    # テーブルヘッダー
+    header_cols = st.columns([0.8, 2.5, 2.5, 2.5, 1])
+    with header_cols[0]:
+        st.markdown('<div class="table-header">No</div>', unsafe_allow_html=True)
+    with header_cols[1]:
+        st.markdown('<div class="table-header">名前</div>', unsafe_allow_html=True)
+    with header_cols[2]:
+        st.markdown('<div class="table-header">1次会</div>', unsafe_allow_html=True)
+    with header_cols[3]:
+        st.markdown('<div class="table-header">2次会</div>', unsafe_allow_html=True)
+    with header_cols[4]:
+        st.markdown('<div class="table-header">削除</div>', unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
     
     for idx, row in df.iterrows():
-        # 1行全体をHTMLで作成
-        st.markdown(f'<div class="attendance-row">', unsafe_allow_html=True)
-        st.markdown(f'<div class="att-cell-no">{row["No"]}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="att-cell-name">{row["名前"]}</div>', unsafe_allow_html=True)
+        # Streamlitのカラム機能を使って横並びに配置
+        cols = st.columns([0.8, 2.5, 2.5, 2.5, 1])
         
-        # 1次会ボタンのセル
-        st.markdown('<div class="att-cell-first">', unsafe_allow_html=True)
-        if row["1次会"]:
-            button_label = "✓ 出席"
-            button_type = "primary"
-        else:
-            button_label = "出席"
-            button_type = "secondary"
+        # No
+        with cols[0]:
+            st.markdown(f'<div style="text-align: center; padding: 0.3rem 0; font-size: 0.9rem;">{row["No"]}</div>', unsafe_allow_html=True)
         
-        if st.button(button_label, key=f"first_{row['No']}", type=button_type):
-            df.at[idx, "1次会"] = not row["1次会"]
-            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            changes_made = True
-        st.markdown('</div>', unsafe_allow_html=True)
+        # 名前
+        with cols[1]:
+            st.markdown(f'<div style="text-align: center; font-weight: bold; padding: 0.3rem 0; font-size: 0.9rem;">{row["名前"]}</div>', unsafe_allow_html=True)
         
-        # 2次会ボタンのセル
-        st.markdown('<div class="att-cell-second">', unsafe_allow_html=True)
-        if row["2次会"]:
-            button_label = "✓ 出席"
-            button_type = "primary"
-        else:
-            button_label = "出席"
-            button_type = "secondary"
+        # 1次会ボタン
+        with cols[2]:
+            if row["1次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "出席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
+                df.at[idx, "1次会"] = not row["1次会"]
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
         
-        if st.button(button_label, key=f"second_{row['No']}", type=button_type):
-            df.at[idx, "2次会"] = not row["2次会"]
-            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            changes_made = True
-        st.markdown('</div>', unsafe_allow_html=True)
+        # 2次会ボタン
+        with cols[3]:
+            if row["2次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "出席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
+                df.at[idx, "2次会"] = not row["2次会"]
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
         
-        # 削除ボタンのセル
-        st.markdown('<div class="att-cell-delete">', unsafe_allow_html=True)
-        confirm_key = f"confirm_delete_{row['No']}"
-        if confirm_key not in st.session_state:
-            st.session_state[confirm_key] = False
-        
-        if st.button("🗑️", key=f"delete_{row['No']}", help="削除"):
-            st.session_state[confirm_key] = True
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        # 行を閉じる
-        st.markdown('</div>', unsafe_allow_html=True)
+        # 削除ボタン
+        with cols[4]:
+            confirm_key = f"confirm_delete_{row['No']}"
+            if confirm_key not in st.session_state:
+                st.session_state[confirm_key] = False
+            
+            if st.button("🗑️", key=f"delete_{row['No']}", help="削除", use_container_width=True):
+                st.session_state[confirm_key] = True
         
         # 削除確認ダイアログ
         if st.session_state[confirm_key]:
@@ -855,6 +524,9 @@ def main():
                 if st.button("いいえ", key=f"no_{row['No']}"):
                     st.session_state[confirm_key] = False
                     st.rerun()
+        
+        # 各行の下に薄い線を追加
+        st.markdown('<hr style="margin: 0.3rem 0; border: none; border-top: 1px solid #eee;">', unsafe_allow_html=True)
     
     # 変更を保存
     if changes_made:
