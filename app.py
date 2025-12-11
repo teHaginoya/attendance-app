@@ -213,7 +213,6 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
-        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
