@@ -147,7 +147,7 @@ st.markdown("""
         border-radius: 5px;
         transition: all 0.3s ease;
         margin-bottom: 0;
-        width: 100%;
+        width: 75%;
     }
     
     .stButton {
