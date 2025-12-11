@@ -2,7 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from datetime import datetime
+from datetime import datetimefda
 import time
 
 # ページ設定
@@ -29,7 +29,7 @@ st.markdown("""
     
     /* コンテナの余白を削減 */
     .element-container {
-        margin-bottom: 0.2rem;
+        # margin-bottom: 0.2rem;
     }
     
     /* stLayoutWrapperの幅を93%に設定 */
@@ -215,7 +215,7 @@ st.markdown("""
     }
     
     div[data-testid="metric-container"] [data-testid="stMetricValue"] {
-        font-size: 1.2rem;
+        font-size: 0.95rem;
     }
     
     /* ヘッダーのスタイル */
