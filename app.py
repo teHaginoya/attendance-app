@@ -216,6 +216,64 @@ st.markdown("""
         background: linear-gradient(135deg, #ef5350 0%, #ec407a 100%) !important;
     }
     
+    /* 選択ポップアップのスタイル */
+    .selection-popup {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #1f77b4;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .selection-popup h4 {
+        color: #1f77b4;
+        font-size: 0.9rem;
+        margin: 0 0 0.5rem 0;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    /* ポップアップ内のボタンスタイル */
+    .selection-popup .stButton button {
+        width: 100% !important;
+        font-size: 0.7rem;
+        padding: 0.4rem 0.3rem;
+    }
+    
+    /* 出席ボタン（ポップアップ内） */
+    .popup-attend button {
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%) !important;
+        color: white !important;
+        border: none !important;
+    }
+    
+    /* 欠席ボタン（ポップアップ内） */
+    .popup-absent button {
+        background: linear-gradient(135deg, #f44336 0%, #ef5350 100%) !important;
+        color: white !important;
+        border: none !important;
+    }
+    
+    /* キャンセルボタン（ポップアップ内） */
+    .popup-cancel button {
+        background-color: #9e9e9e !important;
+        color: white !important;
+        border: none !important;
+    }
+    
     /* メトリクスカードのスタイル */
     div[data-testid="metric-container"] {
         background-color: #f0f8ff;
@@ -759,24 +817,32 @@ def main():
             
             # 選択ポップアップ
             if st.session_state[select_key]:
-                st.markdown("**1次会の出欠を選択:**")
+                st.markdown('<div class="selection-popup">', unsafe_allow_html=True)
+                st.markdown('<h4>📋 1次会の出欠を選択</h4>', unsafe_allow_html=True)
                 col_attend, col_absent, col_cancel = st.columns(3)
                 with col_attend:
+                    st.markdown('<div class="popup-attend">', unsafe_allow_html=True)
                     if st.button("✓ 出席", key=f"attend_first_{row['No']}", type="primary"):
                         df.at[idx, "1次会"] = "出席"
                         df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         st.session_state[select_key] = False
                         changes_made = True
+                    st.markdown('</div>', unsafe_allow_html=True)
                 with col_absent:
+                    st.markdown('<div class="popup-absent">', unsafe_allow_html=True)
                     if st.button("✗ 欠席", key=f"absent_first_{row['No']}"):
                         df.at[idx, "1次会"] = "欠席"
                         df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         st.session_state[select_key] = False
                         changes_made = True
+                    st.markdown('</div>', unsafe_allow_html=True)
                 with col_cancel:
+                    st.markdown('<div class="popup-cancel">', unsafe_allow_html=True)
                     if st.button("キャンセル", key=f"cancel_first_{row['No']}"):
                         st.session_state[select_key] = False
                         st.rerun()
+                    st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
         
         # 2次会ボタン
         with cols[3]:
@@ -811,24 +877,32 @@ def main():
             
             # 選択ポップアップ
             if st.session_state[select_key]:
-                st.markdown("**2次会の出欠を選択:**")
+                st.markdown('<div class="selection-popup">', unsafe_allow_html=True)
+                st.markdown('<h4>🎉 2次会の出欠を選択</h4>', unsafe_allow_html=True)
                 col_attend, col_absent, col_cancel = st.columns(3)
                 with col_attend:
+                    st.markdown('<div class="popup-attend">', unsafe_allow_html=True)
                     if st.button("✓ 出席", key=f"attend_second_{row['No']}", type="primary"):
                         df.at[idx, "2次会"] = "出席"
                         df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         st.session_state[select_key] = False
                         changes_made = True
+                    st.markdown('</div>', unsafe_allow_html=True)
                 with col_absent:
+                    st.markdown('<div class="popup-absent">', unsafe_allow_html=True)
                     if st.button("✗ 欠席", key=f"absent_second_{row['No']}"):
                         df.at[idx, "2次会"] = "欠席"
                         df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         st.session_state[select_key] = False
                         changes_made = True
+                    st.markdown('</div>', unsafe_allow_html=True)
                 with col_cancel:
+                    st.markdown('<div class="popup-cancel">', unsafe_allow_html=True)
                     if st.button("キャンセル", key=f"cancel_second_{row['No']}"):
                         st.session_state[select_key] = False
                         st.rerun()
+                    st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
         
         # 削除ボタン
         with cols[4]:
