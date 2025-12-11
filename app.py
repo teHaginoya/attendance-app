@@ -216,6 +216,13 @@ st.markdown("""
         background: linear-gradient(135deg, #ef5350 0%, #ec407a 100%) !important;
     }
     
+    /* データ行の欠席ボタンも赤色に */
+    .attendance-row-container .absent-button button {
+        background: linear-gradient(135deg, #f44336 0%, #e91e63 100%) !important;
+        color: white !important;
+        border: none !important;
+    }
+    
     /* 選択ポップアップのスタイル */
     .selection-popup {
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
