@@ -84,6 +84,7 @@ st.markdown("""
     }
     
     .attendance-row-container [data-testid="column"] {
+        padding: 0 0.2rem !important;
         gap: 0 !important;
     }
     
