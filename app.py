@@ -381,6 +381,8 @@ st.markdown("""
         div[data-testid="stHorizontalBlock"] {
             width:86%;
             grid-template-columns: 1fr 1fr !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
             gap: 0.3rem !important;
         }
         
