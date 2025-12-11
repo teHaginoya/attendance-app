@@ -110,10 +110,10 @@ st.markdown("""
     
     /* 各カラム内のコンテンツも中央揃え */
     .attendance-row-container [data-testid="column"] > div {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
     }
     
     /* 入力フィールドのサイズを小さく */
