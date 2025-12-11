@@ -37,6 +37,54 @@ st.markdown("""
         padding: 0.2rem !important;
     }
     
+    /* データ行用のカラムは幅を固定 */
+    .attendance-row-container [data-testid="column"]:nth-child(1) {
+        flex: 0 0 8% !important;
+        max-width: 8% !important;
+        min-width: 8% !important;
+        width: 8% !important;
+    }
+    
+    .attendance-row-container [data-testid="column"]:nth-child(2) {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        min-width: 25% !important;
+        width: 25% !important;
+    }
+    
+    .attendance-row-container [data-testid="column"]:nth-child(3) {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        min-width: 25% !important;
+        width: 25% !important;
+    }
+    
+    .attendance-row-container [data-testid="column"]:nth-child(4) {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        min-width: 25% !important;
+        width: 25% !important;
+    }
+    
+    .attendance-row-container [data-testid="column"]:nth-child(5) {
+        flex: 0 0 10% !important;
+        max-width: 10% !important;
+        min-width: 10% !important;
+        width: 10% !important;
+    }
+    
+    /* データ行コンテナのスタイル */
+    .attendance-row-container [data-testid="stHorizontalBlock"] {
+        gap: 0 !important;
+        max-width: 93% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
+    .attendance-row-container [data-testid="column"] {
+        padding: 0 0.2rem !important;
+    }
+    
     /* 入力フィールドのサイズを小さく */
     .stTextInput input {
         font-size: 0.9rem;
@@ -567,56 +615,58 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
-        # データ行全体をHTMLで作成
-        st.markdown('<div class="attendance-row">', unsafe_allow_html=True)
+        # データ行コンテナの開始
+        st.markdown('<div class="attendance-row-container">', unsafe_allow_html=True)
+        
+        # Streamlitのカラム機能を使用（CSSで幅を制御）
+        cols = st.columns([8, 25, 25, 25, 10])
         
         # No
-        st.markdown(f'<div class="att-cell-no">{row["No"]}</div>', unsafe_allow_html=True)
+        with cols[0]:
+            st.markdown(f'<div style="text-align: center; padding: 0.3rem 0; font-size: 0.9rem;">{row["No"]}</div>', unsafe_allow_html=True)
         
         # 名前
-        st.markdown(f'<div class="att-cell-name">{row["名前"]}</div>', unsafe_allow_html=True)
+        with cols[1]:
+            st.markdown(f'<div style="text-align: center; font-weight: bold; padding: 0.3rem 0; font-size: 0.9rem;">{row["名前"]}</div>', unsafe_allow_html=True)
         
         # 1次会ボタン
-        st.markdown('<div class="att-cell-first">', unsafe_allow_html=True)
-        if row["1次会"]:
-            button_label = "✓ 出席"
-            button_type = "primary"
-        else:
-            button_label = "出席"
-            button_type = "secondary"
-        
-        if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
-            df.at[idx, "1次会"] = not row["1次会"]
-            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            changes_made = True
-        st.markdown('</div>', unsafe_allow_html=True)
+        with cols[2]:
+            if row["1次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "出席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"first_{row['No']}", type=button_type, use_container_width=True):
+                df.at[idx, "1次会"] = not row["1次会"]
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
         
         # 2次会ボタン
-        st.markdown('<div class="att-cell-second">', unsafe_allow_html=True)
-        if row["2次会"]:
-            button_label = "✓ 出席"
-            button_type = "primary"
-        else:
-            button_label = "出席"
-            button_type = "secondary"
-        
-        if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
-            df.at[idx, "2次会"] = not row["2次会"]
-            df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            changes_made = True
-        st.markdown('</div>', unsafe_allow_html=True)
+        with cols[3]:
+            if row["2次会"]:
+                button_label = "✓ 出席"
+                button_type = "primary"
+            else:
+                button_label = "出席"
+                button_type = "secondary"
+            
+            if st.button(button_label, key=f"second_{row['No']}", type=button_type, use_container_width=True):
+                df.at[idx, "2次会"] = not row["2次会"]
+                df.at[idx, "更新日時"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                changes_made = True
         
         # 削除ボタン
-        st.markdown('<div class="att-cell-delete">', unsafe_allow_html=True)
-        confirm_key = f"confirm_delete_{row['No']}"
-        if confirm_key not in st.session_state:
-            st.session_state[confirm_key] = False
+        with cols[4]:
+            confirm_key = f"confirm_delete_{row['No']}"
+            if confirm_key not in st.session_state:
+                st.session_state[confirm_key] = False
+            
+            if st.button("🗑️", key=f"delete_{row['No']}", help="削除", use_container_width=True):
+                st.session_state[confirm_key] = True
         
-        if st.button("🗑️", key=f"delete_{row['No']}", help="削除", use_container_width=True):
-            st.session_state[confirm_key] = True
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        # 行を閉じる
+        # データ行コンテナの終了
         st.markdown('</div>', unsafe_allow_html=True)
         
         # 削除確認ダイアログ
