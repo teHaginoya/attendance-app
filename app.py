@@ -262,7 +262,6 @@ st.markdown("""
         color: white;
         padding: 0.5rem 0;
         border-radius: 5px;
-        margin-bottom: 0.5rem;
     }
     
     /* データ行のスタイル */
@@ -338,7 +337,7 @@ st.markdown("""
     .att-cell-first button,
     .att-cell-second button,
     .att-cell-delete button {
-        width: 100% !important;
+        width: 75% !important;
     }
     
     /* 行の区切り線 */
