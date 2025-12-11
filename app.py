@@ -79,10 +79,24 @@ st.markdown("""
         max-width: 93% !important;
         margin-left: auto !important;
         margin-right: auto !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
     
     .attendance-row-container [data-testid="column"] {
         padding: 0 0.2rem !important;
+        gap: 0 !important;
+    }
+    
+    /* attendance-row-container自体の余白も削除 */
+    .attendance-row-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* attendance-row-container内の全ての要素の余白を削除 */
+    .attendance-row-container > * {
+        margin: 0 !important;
     }
     
     /* 入力フィールドのサイズを小さく */
