@@ -34,7 +34,6 @@ st.markdown("""
     
     /* 削除確認ダイアログ用のカラム設定（st.columnsを使用） */
     [data-testid="column"] {
-        padding: 0.2rem !important;
     }
     
     /* データ行用のカラムは幅を固定 */
@@ -76,13 +75,11 @@ st.markdown("""
     /* データ行コンテナのスタイル */
     .attendance-row-container [data-testid="stHorizontalBlock"] {
         gap: 0 !important;
-        max-width: 93% !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
     
     .attendance-row-container [data-testid="column"] {
-        padding: 0 0.2rem !important;
     }
     
     /* 入力フィールドのサイズを小さく */
