@@ -155,6 +155,63 @@ st.markdown("""
         text-align: center;
     }
     
+    /* テーブルヘッダーのスタイル */
+    .attendance-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: bold;
+        background-color: #1f77b4;
+        color: white;
+        padding: 0.5rem 0;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .att-cell-no {
+        flex: 0 0 8% !important;
+        max-width: 8% !important;
+        text-align: center;
+        font-size: 1rem;
+        padding: 0 0.2rem;
+    }
+    
+    .att-cell-name {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .att-cell-first {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        text-align: center;
+        font-size: 1rem;
+        padding: 0 0.2rem;
+    }
+    
+    .att-cell-second {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        text-align: center;
+        font-size: 1rem;
+        padding: 0 0.2rem;
+    }
+    
+    .att-cell-delete {
+        flex: 0 0 10% !important;
+        max-width: 10% !important;
+        text-align: center;
+        font-size: 1rem;
+        padding: 0 0.2rem;
+    }
+    
     /* 行の区切り線 */
     hr {
         margin: 0.3rem 0;
@@ -215,6 +272,14 @@ st.markdown("""
             font-size: 0.75rem;
             padding: 0.4rem;
         }
+        /* テーブルヘッダーのフォントサイズ */
+        .attendance-header .att-cell-no,
+        .attendance-header .att-cell-name,
+        .attendance-header .att-cell-first,
+        .attendance-header .att-cell-second,
+        .attendance-header .att-cell-delete {
+            font-size: 0.75rem;
+        }
     }
     
     /* さらに小さい画面（スマホ縦持ち） */
@@ -247,6 +312,14 @@ st.markdown("""
         .table-header {
             font-size: 0.7rem;
             padding: 0.3rem;
+        }
+        /* テーブルヘッダーのフォントサイズ */
+        .attendance-header .att-cell-no,
+        .attendance-header .att-cell-name,
+        .attendance-header .att-cell-first,
+        .attendance-header .att-cell-second,
+        .attendance-header .att-cell-delete {
+            font-size: 0.7rem;
         }
     }
     </style>
@@ -443,18 +516,16 @@ def main():
     
     st.markdown("---")
     
-    # テーブルヘッダー
-    header_cols = st.columns([0.8, 2.5, 2.5, 2.5, 1])
-    with header_cols[0]:
-        st.markdown('<div class="table-header">No</div>', unsafe_allow_html=True)
-    with header_cols[1]:
-        st.markdown('<div class="table-header">名前</div>', unsafe_allow_html=True)
-    with header_cols[2]:
-        st.markdown('<div class="table-header">1次会</div>', unsafe_allow_html=True)
-    with header_cols[3]:
-        st.markdown('<div class="table-header">2次会</div>', unsafe_allow_html=True)
-    with header_cols[4]:
-        st.markdown('<div class="table-header">削除</div>', unsafe_allow_html=True)
+    # ヘッダー行
+    st.markdown("""
+    <div class="attendance-header">
+        <div class="att-cell-no">No</div>
+        <div class="att-cell-name">名前</div>
+        <div class="att-cell-first">1次会</div>
+        <div class="att-cell-second">2次会</div>
+        <div class="att-cell-delete">削除</div>
+    </div>
+    """, unsafe_allow_html=True)
     
     # 出席簿フォーム
     changes_made = False
