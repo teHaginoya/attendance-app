@@ -35,16 +35,24 @@ st.markdown("""
     /* カラム間のギャップを完全に削除 */
     [data-testid="column"] {
         padding: 0 !important;
+        margin: 0 !important;
     }
     
     /* カラムコンテナのギャップも削除 */
-    [data-testid="stHorizontalBlock"] > div {
+    [data-testid="stHorizontalBlock"] {
         gap: 0 !important;
+        justify-content: center !important;
+        display: flex !important;
     }
     
     /* カラム要素の余白を削除 */
     div[data-testid="column"] > div {
         padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* 各カラムの内部要素も余白削除 */
+    div[data-testid="column"] * {
         margin: 0 !important;
     }
     
@@ -172,6 +180,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         width: 100%;
+        max-width: 93%;
         margin-left: auto;
         margin-right: auto;
         font-weight: bold;
@@ -542,6 +551,9 @@ def main():
     changes_made = False
     
     for idx, row in df.iterrows():
+        # データ行全体を中央揃えのコンテナで囲む
+        st.markdown('<div style="display: flex; justify-content: center; width: 100%;">', unsafe_allow_html=True)
+        
         # Streamlitのカラム機能を使って横並びに配置（ヘッダーと同じ比率: 8%, 25%, 25%, 25%, 10%）
         cols = st.columns([8, 25, 25, 25, 10])
         
@@ -589,6 +601,8 @@ def main():
             
             if st.button("🗑️", key=f"delete_{row['No']}", help="削除", use_container_width=True):
                 st.session_state[confirm_key] = True
+        
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # 削除確認ダイアログ
         if st.session_state[confirm_key]:
