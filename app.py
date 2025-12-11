@@ -97,14 +97,6 @@ st.markdown("""
         margin-bottom: 0 !important;
     }
     
-    /* st-emotion-cache-pk3c77のmax-widthを制限 */
-    .st-emotion-cache-pk3c77 {
-        max-width: none !important;
-        width: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
     /* 行間の余白を削減 */
     .row-widget {
         margin-bottom: 0.3rem;
@@ -603,64 +595,42 @@ def main():
     .att-cell-no {
         flex: 0 0 8% !important;
         max-width: 8% !important;
-        min-width: 8% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
-        overflow: hidden;
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
     }
     
     .att-cell-name {
         flex: 0 0 25% !important;
         max-width: 25% !important;
-        min-width: 25% !important;
         text-align: center;
         font-weight: bold;
         font-size: 1rem;
         padding: 0 0.5rem;
-        overflow: hidden;
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
     }
     
     .att-cell-first {
         flex: 0 0 25% !important;
         max-width: 25% !important;
-        min-width: 25% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
     }
     
     .att-cell-second {
         flex: 0 0 25% !important;
         max-width: 25% !important;
-        min-width: 25% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
     }
     
     .att-cell-delete {
         flex: 0 0 10% !important;
         max-width: 10% !important;
-        min-width: 10% !important;
         text-align: center;
         font-size: 1rem;
         padding: 0 0.2rem;
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
     }
     
     /* ヘッダーの各セルの文字サイズを統一 */
@@ -687,40 +657,12 @@ def main():
         display: inline-block !important;
         margin: 0 !important;
         padding: 0 !important;
-        max-width: fit-content !important;
-        width: auto !important;
     }
     
     /* att-cell-*が含まれるdivはインライン */
     div[class*="att-cell-"] {
-        display: inline-flex !important;
-        vertical-align: middle !important;
-        box-sizing: border-box !important;
-    }
-    
-    /* att-cell内の全ての子要素も幅制限 */
-    .att-cell-no > *,
-    .att-cell-name > * {
-        max-width: 100% !important;
-        width: 100% !important;
-        display: block !important;
-    }
-    
-    /* attendance-row内のst-emotion-cache-pk3c77を制限 */
-    .attendance-row .st-emotion-cache-pk3c77 {
-        max-width: none !important;
-        width: auto !important;
         display: inline-block !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* attendance-row内のすべてのst-emotion-cacheクラスを制限 */
-    .attendance-row [class*="st-emotion-cache"] {
-        max-width: none !important;
-        width: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        vertical-align: middle !important;
     }
     
     /* ボタンコンテナもFlexboxに */
@@ -777,11 +719,11 @@ def main():
     }
     
     @media (max-width: 768px) {
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; min-width: 8% !important; font-size: 0.75rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; font-size: 0.75rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; min-width: 10% !important; }
+        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.75rem; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.75rem; }
+        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
+        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
@@ -803,11 +745,11 @@ def main():
     
     @media (max-width: 480px) {
         .attendance-row { padding: 0.15rem 0; min-height: 2.2rem; }
-        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; min-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
-        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
-        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
-        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; min-width: 25% !important; }
-        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; min-width: 10% !important; }
+        .att-cell-no { flex: 0 0 8% !important; max-width: 8% !important; font-size: 0.7rem; padding: 0 0.1rem; }
+        .att-cell-name { flex: 0 0 25% !important; max-width: 25% !important; font-size: 0.7rem; padding: 0 0.2rem; }
+        .att-cell-first { flex: 0 0 25% !important; max-width: 25% !important; }
+        .att-cell-second { flex: 0 0 25% !important; max-width: 25% !important; }
+        .att-cell-delete { flex: 0 0 10% !important; max-width: 10% !important; }
         
         /* ヘッダーの文字サイズも統一 */
         .attendance-header .att-cell-no,
